@@ -1,0 +1,9 @@
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\Debug\DAL.dll
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\Debug\DAL.pdb
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\Debug\BE.dll
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\Debug\DS.dll
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\Debug\BE.pdb
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\Debug\DS.pdb
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.dll
+C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.pdb
