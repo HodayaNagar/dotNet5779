@@ -15,6 +15,6 @@
 
     public enum Pass
     {
-        Passed, Failed
+        Passed, Failed, None
     }
 }
