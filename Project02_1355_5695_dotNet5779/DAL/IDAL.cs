@@ -10,11 +10,11 @@ namespace DAL
 
         void AddTester(Tester tester);
 
-        bool RemoveTester(int testerID);
+        bool RemoveTester(long testerID);
 
         void UpdateTester(Tester tester);
 
-        Tester GetTester(int testerID);
+        Tester GetTester(long testerID);
 
         IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null);
 
@@ -24,11 +24,11 @@ namespace DAL
 
         void AddTrainee(Trainee trainee);
 
-        bool RemoveTrainee(int traineeID);
+        bool RemoveTrainee(long traineeID);
 
         void UpdateTrainee(Trainee trainee);
 
-        Trainee GetTrainee(int traineeID);
+        Trainee GetTrainee(long traineeID);
 
         IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null);
 
@@ -36,7 +36,7 @@ namespace DAL
 
         #region Test Functions
 
-        void AddTest(Test test, int testerID, int traineeID);
+        void AddTest(Test test, long testerID, long traineeID);
 
         bool RemoveTest(long testID);
 

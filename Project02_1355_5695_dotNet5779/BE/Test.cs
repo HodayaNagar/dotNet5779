@@ -6,11 +6,10 @@ namespace BE
     public class Test
     {
         public long TestID { get; set; }
-        public int TraineeID { get; set; }
-        public int TesterID { get; set; }
-        
+        public long TraineeID { get; set; }
+        public long TesterID { get; set; }
+
         public DateTime TestTime { get; set; }
-        //   public TimeSpan Time { get; set; }
         public Address StartingPoint { get; set; }
         public Dictionary<TestCriterion, Pass> Requirements { get; set; }
 
@@ -23,12 +22,12 @@ namespace BE
         public Test()
         {
             Requirements = new Dictionary<TestCriterion, Pass>();
-                    //{
-                    //  { "Distance" , Pass.Failed },
-                    //  { "reverse" , Pass.Failed },
-                    //  { "Mirrors" , Pass.Failed },
-                    //  { "signals" , Pass.Failed }
-                    //};
+
+            Requirements.Add(TestCriterion.Distance, Pass.None);
+            Requirements.Add(TestCriterion.Mirrors, Pass.None);
+            Requirements.Add(TestCriterion.Reverse, Pass.None);
+            Requirements.Add(TestCriterion.Signals, Pass.None);
+
         }
 
 

@@ -4,7 +4,8 @@ namespace BE
 {
     public class Tester
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
+
         public string FullName { get => $"{FirstName} {LastName}"; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
@@ -13,9 +14,7 @@ namespace BE
         public Address Address { get; set; }
         public string MobileNumber { get; set; }
 
-        //public int Experience { get; set; }
         public int Seniority { get; set; } // ותק בעבודה
-        //public CarType ExpertiseCar { get; set; }
         public CarType CarSpecializtion { get; set; }
         public int MaxWeeklyTests { get; set; }
         public int WeeklyTests { get; set; }
@@ -24,29 +23,12 @@ namespace BE
         public bool[,] WorkingSchedule { get; set; }
 
 
-        // public List<int> RegisteredTestList { get; set; }
-
-        //public bool[,] IsAvailable
-        //{
-        //    get { return IsAvailable; }
-        //    set
-        //    {
-        //        for (int i = 0; i < 6; i++)
-        //        {
-        //            for (int j = 0; j < 5; j++)
-        //            {
-        //                IsAvailable[i, j] = value[i, j];
-        //            }
-        //        }
-        //    }
-        //}
-
         public Tester()
         {
             WorkingSchedule = new bool[Configuration.WorkingDaysInWeek, Configuration.WorkingHoursInDay];
 
-            for (int i = 0; i < 6; i++)
-                for (int j = 0; j < 5; j++)
+            for (int i = 0; i < Configuration.WorkingDaysInWeek; i++)
+                for (int j = 0; j < Configuration.WorkingHoursInDay; j++)
                     WorkingSchedule[i, j] = true;
         }
 

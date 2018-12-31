@@ -20,6 +20,6 @@
 
     public enum TestCriterion
     {
-
+        Distance, Reverse, Mirrors, Signals
     }
 }

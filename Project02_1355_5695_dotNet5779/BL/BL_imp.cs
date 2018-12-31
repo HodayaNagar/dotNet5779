@@ -16,7 +16,7 @@ namespace BL
         {
             if (DateTime.Now.Year - tester.BirthDate.Year < Configuration.MinTesterAge)
             {
-                throw new Exception($"Tester is under {Configuration.MinTesterAge}.");
+                throw new Exception($"Tester is under {Configuration.MinTesterAge}");
             }
             try
             {
@@ -28,11 +28,11 @@ namespace BL
             }
         }
 
-        public bool RemoveTester(int id)
+        public bool RemoveTester(long testerID)
         {
             try
             {
-                DAL.FactorySingletonDal.getInstance().RemoveTester(id);
+                DAL.FactorySingletonDal.getInstance().RemoveTester(testerID);
             }
             catch (Exception exception)
             {
@@ -53,9 +53,9 @@ namespace BL
             }
         }
 
-        public Tester GetTester(int id)
+        public Tester GetTester(long testerID)
         {
-            return DAL.FactorySingletonDal.getInstance().GetTester(id);
+            return DAL.FactorySingletonDal.getInstance().GetTester(testerID);
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
@@ -82,11 +82,11 @@ namespace BL
             }
         }
 
-        public bool RemoveTrainee(int id)
+        public bool RemoveTrainee(long traineeID)
         {
             try
             {
-                DAL.FactorySingletonDal.getInstance().RemoveTrainee(id);
+                DAL.FactorySingletonDal.getInstance().RemoveTrainee(traineeID);
             }
             catch (Exception exception)
             {
@@ -107,9 +107,9 @@ namespace BL
             }
         }
 
-        public Trainee GetTrainee(int id)
+        public Trainee GetTrainee(long traineeID)
         {
-            return DAL.FactorySingletonDal.getInstance().GetTrainee(id);
+            return DAL.FactorySingletonDal.getInstance().GetTrainee(traineeID);
         }
 
         public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
@@ -120,7 +120,7 @@ namespace BL
 
         #region Test Functions
 
-        public void AddTest(Test test, int idTester, int idTrainee)
+        public void AddTest(Test test, long testerID, long traineeID)
         {
             Trainee trainee = GetTrainee(test.TraineeID);
             if (trainee == null)
@@ -147,7 +147,7 @@ namespace BL
             // בודקים את הפרש המבחן הקודם אם היה למבחן החדש
             if ((test.TestTime - lastTest).TotalDays < BE.Configuration.MinGapTest)
             {
-                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {(test.TestTime - lastTest).TotalDays} days passed since the last test.");
+                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {(test.TestTime - lastTest).TotalDays} days passed since the last test");
             }
 
             // בודקים אם בוחן עבר את מקסימום המבחנים לשבוע
@@ -159,7 +159,7 @@ namespace BL
             //לא ניתן לקבוע מבחן לתלמיד שעשה פחות מ20 שיעורים
             if (trainee.TotalLessonsNumber < Configuration.MinLessons)
             {
-                throw new Exception($"Trainee did not do { Configuration.MinLessons } lessons, he lackes {Configuration.MinLessons - trainee.TotalLessonsNumber} lessons.");
+                throw new Exception($"Trainee did not do { Configuration.MinLessons } lessons, he lackes {Configuration.MinLessons - trainee.TotalLessonsNumber} lessons");
             }
 
 
@@ -176,7 +176,7 @@ namespace BL
             //יש להתאים בין סוג הרכב שעליו למד התלמיד להתמחות של הבוחן
             if (trainee.CarTrained != tester.CarSpecializtion)
             {
-                throw new Exception("Tester does not suitable for this type of car.");
+                throw new Exception("Tester does not suitable for this type of car");
             }
 
             // לא ניתן לקבוע 2 מבחנים לתלמיד או בוחן באותה שעה
@@ -193,7 +193,7 @@ namespace BL
 
             try
             {
-                //DAL.FactorySingletonDal.getInstance().AddTest(test);
+              DAL.FactorySingletonDal.getInstance().AddTest(test,testerID,traineeID);
             }
             catch (Exception exception)
             {
@@ -215,11 +215,11 @@ namespace BL
             }
         }
 
-        public bool RemoveTest(int id)
+        public bool RemoveTest(long testID)
         {
             try
             {
-                DAL.FactorySingletonDal.getInstance().RemoveTest(id);
+                DAL.FactorySingletonDal.getInstance().RemoveTest(testID);
             }
             catch (Exception exception)
             {
@@ -228,9 +228,9 @@ namespace BL
             return true;
         }
 
-        public Test GetTest(int id)
+        public Test GetTest(long testID)
         {
-            return DAL.FactorySingletonDal.getInstance().GetTest(id);
+            return DAL.FactorySingletonDal.getInstance().GetTest(testID);
         }
 
         public IEnumerable<Test> GetAllTests(Func<Test, bool> predicate = null)
@@ -242,16 +242,16 @@ namespace BL
 
 
         // מספר מבחנים שתלמיד רשום אליהם
-        public int TestsSum(Trainee t)
+        public int TestsSum(Trainee trainee)
         {
-            return (GetAllTests(gat => gat.TraineeID == t.ID)).Count();
+            return GetAllTests(gat => gat.TraineeID == trainee.ID).Count();
         }
 
         // האם תלמיד עבר מבחן טסט בהצלחה
-        public bool PassedTest(int idTrainee, int idTest)
+        public bool PassedTest(long traineeID, long testID)
         {
-            Trainee t1 = GetTrainee(idTrainee);
-            Test t2 = GetTest(idTest);
+            Trainee t1 = GetTrainee(traineeID);
+            Test t2 = GetTest(testID);
             if (t1 != null && t2 != null)
             {
                 if (t2.Result == Pass.Passed)
@@ -285,10 +285,10 @@ namespace BL
         }
 
         // האם תלמיד עמד בדרישות של המבחן
-        public bool PassedRequirements(int idTest, int idTrainee)
+        public bool PassedRequirements(long testID, long traineeID)
         {
-            Test t1 = GetTest(idTest);
-            if (t1.TraineeID == idTrainee)
+            Test t1 = GetTest(testID);
+            if (t1.TraineeID == traineeID)
 
             {
                 foreach (var item in t1.Requirements)

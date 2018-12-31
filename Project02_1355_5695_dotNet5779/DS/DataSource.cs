@@ -13,7 +13,7 @@ namespace DS
 
         public static void data()
         {
-            int RunningID = 1000;
+            int RunningID = 10000000;
             int tRunningID = 12345674; // 12345678 - זאת תעודת זהות לא תקינה
             // אתן אמורות לבדוק תקינות תעודת זהות, לא?
 
@@ -25,9 +25,9 @@ namespace DS
             {
                 tester = new Tester()
                 {
-                    ID = i,
+                    ID = RunningID++,
                     FirstName = $"Tester {i}",
-                    LastName = $"ID {RunningID++}",
+                    LastName = $"ID {RunningID - 1}",
                     BirthDate = new DateTime(2000, 12, 12),
                     Gender = Gender.Male,
                     Address = new Address()
@@ -84,7 +84,6 @@ namespace DS
             }
             #endregion
 
-
             #region Test data
 
             Test test;
@@ -92,25 +91,24 @@ namespace DS
             {
                 test = new Test()
                 {
-                    TestID = tRunningID,
-                    TraineeID = i + 1000,
-                    TesterID = i + 1010,
+                    TestID = tRunningID++,
+                    TraineeID = i + tRunningID,
+                    TesterID = i + tRunningID,
                     TestTime = new DateTime(2019, 01, i + 1),
-                    //Time = new TimeSpan(i, i, 0),
                     StartingPoint = new Address()
                     {
                         City = "Ramat Gat",
                         StreetName = "Aluf David",
                         BuildingNumber = 187
                     },
-                    //Requirements = new Dictionary<string, Pass>()
-                    //{
-                    //  { "Distance" , Pass.Failed },
-                    //  { "reverse" , Pass.Failed },
-                    //  { "Mirrors" , Pass.Failed },
-                    //  { "signals" , Pass.Failed }
-                    //},
-                    Result = Pass.Failed,
+                    Requirements = new Dictionary<TestCriterion, Pass>()
+                    {
+                        { TestCriterion.Distance, Pass.Passed },
+                        { TestCriterion.Mirrors, Pass.Passed },
+                        { TestCriterion.Reverse, Pass.Passed },
+                        { TestCriterion.Signals, Pass.Passed },
+                    },
+                    Result = Pass.Passed,
                     Comments = "trainee drives too fast"
                 };
 

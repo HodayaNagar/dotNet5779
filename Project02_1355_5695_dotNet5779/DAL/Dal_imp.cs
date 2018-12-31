@@ -30,7 +30,7 @@ namespace DAL
             testersList.Add(tester);
         }
 
-        public bool RemoveTester(int testerID)
+        public bool RemoveTester(long testerID)
         {
             Tester t = GetTester(testerID);
             if (t == null)
@@ -38,8 +38,6 @@ namespace DAL
                 throw new Exception("Tester with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
-
-            // t.RegisteredTestList.Clear();
             testsList.RemoveAll(tl => tl.TesterID == testerID);
             return testersList.Remove(t);
         }
@@ -54,7 +52,7 @@ namespace DAL
             testersList[index] = tester;
         }
 
-        public Tester GetTester(int testerID)
+        public Tester GetTester(long testerID)
         {
             return testersList.FirstOrDefault(tl => tl.ID == testerID);
         }
@@ -80,7 +78,7 @@ namespace DAL
             traineesList.Add(trainee);
         }
 
-        public bool RemoveTrainee(int traineeID)
+        public bool RemoveTrainee(long traineeID)
         {
             Trainee t = GetTrainee(traineeID);
             if (t == null)
@@ -88,7 +86,6 @@ namespace DAL
                 throw new Exception("Trainee with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
-            // t.RegisteredTestList.Clear();
             testsList.RemoveAll(tl => tl.TraineeID == traineeID);
             return traineesList.Remove(t);
         }
@@ -103,7 +100,7 @@ namespace DAL
             traineesList[index] = trainee;
         }
 
-        public Trainee GetTrainee(int traineeID)
+        public Trainee GetTrainee(long traineeID)
         {
             return traineesList.FirstOrDefault(tl => tl.ID == traineeID);
         }
@@ -121,7 +118,7 @@ namespace DAL
 
         #region Test Functions
 
-        public void AddTest(Test test, int testerID, int traineeID)
+        public void AddTest(Test test, long testerID, long traineeID)
         {
             // צריך לבדוק שבוחן ונבחן שרשומים קיימים ברשימות ושהמבחן לא קיים ברשימה
             Test t1 = GetTest(test.TestID);
@@ -142,8 +139,6 @@ namespace DAL
             test.TestID = Configuration.RunningTestID++;
             test.TesterID = testerID;
             test.TraineeID = traineeID;
-            // t2.RegisteredTestList.Add(test.TestID);
-            // t3.RegisteredTestList.Add(test.TestID);
             testsList.Add(test);
         }
 
