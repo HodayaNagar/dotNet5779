@@ -4,6 +4,8 @@
     {
         public static int MinTesterAge = 40;
 
+        public static int MaxTesterAge = 67;
+
         public static int MinTraineeAge = 18;
 
         public static int MinLessons = 20;

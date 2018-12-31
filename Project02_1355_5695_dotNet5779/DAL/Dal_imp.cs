@@ -139,6 +139,8 @@ namespace DAL
             test.TestID = Configuration.RunningTestID++;
             test.TesterID = testerID;
             test.TraineeID = traineeID;
+            t2.AvailableSchedule[(int)test.TestDate.DayOfWeek, test.TestDate.Hour] = false;
+
             testsList.Add(test);
         }
 

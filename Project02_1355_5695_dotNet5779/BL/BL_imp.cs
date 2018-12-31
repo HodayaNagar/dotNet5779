@@ -18,6 +18,11 @@ namespace BL
             {
                 throw new Exception($"Tester is under {Configuration.MinTesterAge}");
             }
+            if (DateTime.Now.Year - tester.BirthDate.Year > Configuration.MaxTesterAge)
+            {
+                throw new Exception($"Tester is over {Configuration.MinTesterAge}, it's pension age");
+            }
+
             try
             {
                 DAL.FactorySingletonDal.getInstance().AddTester(tester);
@@ -134,36 +139,45 @@ namespace BL
                 throw new Exception("Tester does not exsist");
             }
 
-            DateTime lastTest = DateTime.Now;
-            //בודקים ברשימת הטסטים האים קיים תלמיד עם אותו תז בפעם האחרונה שלו
-            foreach (var item in GetAllTests())
-            {
-                if (item.TraineeID == test.TraineeID)
-                {
-                    lastTest = item.TestTime;
-                }
-            }
-
             // בודקים את הפרש המבחן הקודם אם היה למבחן החדש
-            if ((test.TestTime - lastTest).TotalDays < BE.Configuration.MinGapTest)
+            if (DifferenceBetweenTwoDates(test, traineeID) < BE.Configuration.MinGapTest)
             {
-                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {(test.TestTime - lastTest).TotalDays} days passed since the last test");
-            }
-
-            // בודקים אם בוחן עבר את מקסימום המבחנים לשבוע
-            if (tester.WeeklyTests >= tester.MaxWeeklyTests)
-            {
-                throw new Exception("Tester's schedule is full for this week.");
+                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {DifferenceBetweenTwoDates(test, traineeID)} days passed since the last test");
             }
 
             //לא ניתן לקבוע מבחן לתלמיד שעשה פחות מ20 שיעורים
             if (trainee.TotalLessonsNumber < Configuration.MinLessons)
             {
-                throw new Exception($"Trainee did not do { Configuration.MinLessons } lessons, he lackes {Configuration.MinLessons - trainee.TotalLessonsNumber} lessons");
+                throw new Exception($"Trainee did not do { Configuration.MinLessons } lessons, he needs to do {Configuration.MinLessons - trainee.TotalLessonsNumber} lessons");
             }
 
+            // לא ניתן לקבוע מבחן אם אין בוחן פנוי ןאם אין מציעים תאריך אחר למבחן
+            if (IsTesterAvailable(test.TestDate) == false)
+            {
+                SearchForNewDateOfTest(test.TestDate);
+            }
+
+            // בודקים אם בוחן עבר את מקסימום המבחנים לשבוע
+            if (tester.WeeklyTests >= tester.MaxWeeklyTests)
+            {
+                throw new Exception("Tester's schedule is full for this week");
+            }
+
+            // לא ניתן לקבוע 2 מבחנים לתלמיד או בוחן באותה שעה
+            if (HasTestAtSameDate(test, testerID, traineeID) == true)
+            {
+                throw new Exception("Can not set two tests at the same time");
+            }
 
             //לא ניתן לקבוע מבחן על סוג רכב מסוים לתלמיד שכבר עבר בהצלחה מבחן נהיגה על סוג כזה
+            test.Result = Pass.Passed;
+            foreach (var item in test.Requirements)
+            {
+                if (item.Value != Pass.Passed)
+                {
+                    test.Result = Pass.Failed;
+                }
+            }
             if (test.Result == Pass.Passed)
             {
                 // בודקים איזה סוג רכב למד התלמיד
@@ -179,21 +193,9 @@ namespace BL
                 throw new Exception("Tester does not suitable for this type of car");
             }
 
-            // לא ניתן לקבוע 2 מבחנים לתלמיד או בוחן באותה שעה
-            foreach (var item in GetAllTests())
-            {
-                //if ()
-            }
-
-
-
-
-
-
-
             try
             {
-              DAL.FactorySingletonDal.getInstance().AddTest(test,testerID,traineeID);
+                DAL.FactorySingletonDal.getInstance().AddTest(test, testerID, traineeID);
             }
             catch (Exception exception)
             {
@@ -204,6 +206,13 @@ namespace BL
         public void UpdateTest(Test test)
         {
             //לא ניתן לעדכן מבחן כאשר לא קיימים כל השדות שהבוחן צריך למלא
+            foreach (var item in test.Requirements)
+            {
+                if (item.Value == Pass.None)
+                {
+                    throw new Exception("Tester needs to fill all fields required");
+                }
+            }
 
             try
             {
@@ -240,6 +249,62 @@ namespace BL
         #endregion
 
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public double DifferenceBetweenTwoDates(Test test, long traineeID)
+        {
+            DateTime lastTest = DateTime.Now;
+            //בודקים ברשימת הטסטים האים קיים תלמיד עם אותו תז בפעם האחרונה שלו
+            foreach (var item in GetAllTests())
+            {
+                if (item.TraineeID == traineeID)
+                {
+                    lastTest = item.TestTime;
+                }
+            }
+            return (test.TestTime - lastTest).TotalDays;
+        }
+
+        public bool IsTesterAvailable(DateTime testDate)
+        {
+            foreach (var item in GetAllTesters())
+            {
+                if (item.IsWorking(testDate) == true && item.IsAvailable(testDate) == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public DateTime SearchForNewDateOfTest(DateTime date)
+        {
+            DateTime closestDate = DateTime.Now;
+            foreach (var item in GetAllTests())
+            {
+                if (item.TestDate > date && item.TestDate < closestDate && IsTesterAvailable(item.TestDate) == true)
+                {
+                    closestDate = item.TestDate;
+                }
+            }
+            return closestDate;
+        }
+
+        public bool HasTestAtSameDate(Test test, long testerID, long traineeID)
+        {
+            foreach (var item in GetAllTests())
+            {
+                if (item.TestDate == test.TestDate)
+                {
+                    if (item.TesterID == testerID || item.TraineeID == traineeID)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         // מספר מבחנים שתלמיד רשום אליהם
         public int TestsSum(Trainee trainee)
