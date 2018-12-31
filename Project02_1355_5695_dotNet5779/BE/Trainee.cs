@@ -5,7 +5,7 @@ namespace BE
     public class Trainee
     {
         public long ID { get; set; }
-        
+
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public DateTime BirthDate { get; set; }
@@ -17,7 +17,7 @@ namespace BE
         public GearType GearType { get; set; }
         public String DrivingSchool { get; set; }
         public int TotalLessonsNumber { get; set; }
-        
+
         public String DrivingInstructorFirstName { get; set; }
         public String DrivingInstructorLastName { get; set; }
 

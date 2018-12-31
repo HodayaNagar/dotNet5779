@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using GoogleMapsAPI;
+//using GoogleMapsApi;
+//using GoogleMapsApi.Entities.Directions.Request;
+//using GoogleMapsApi.Entities.Directions.Response;
 
 namespace BL
 {
@@ -152,7 +156,7 @@ namespace BL
             }
 
             // לא ניתן לקבוע מבחן אם אין בוחן פנוי ןאם אין מציעים תאריך אחר למבחן
-            if (IsTesterAvailable(test.TestDate) == false)
+            if (GetAvailableTesters(test.TestDate).Count() == 0)
             {
                 SearchForNewDateOfTest(test.TestDate);
             }
@@ -170,15 +174,7 @@ namespace BL
             }
 
             //לא ניתן לקבוע מבחן על סוג רכב מסוים לתלמיד שכבר עבר בהצלחה מבחן נהיגה על סוג כזה
-            test.Result = Pass.Passed;
-            foreach (var item in test.Requirements)
-            {
-                if (item.Value != Pass.Passed)
-                {
-                    test.Result = Pass.Failed;
-                }
-            }
-            if (test.Result == Pass.Passed)
+            if (PassedTest(traineeID) == true)
             {
                 // בודקים איזה סוג רכב למד התלמיד
                 if (trainee.CarTrained == test.CarType)
@@ -249,7 +245,7 @@ namespace BL
         #endregion
 
 
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         public double DifferenceBetweenTwoDates(Test test, long traineeID)
@@ -266,24 +262,12 @@ namespace BL
             return (test.TestTime - lastTest).TotalDays;
         }
 
-        public bool IsTesterAvailable(DateTime testDate)
-        {
-            foreach (var item in GetAllTesters())
-            {
-                if (item.IsWorking(testDate) == true && item.IsAvailable(testDate) == true)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public DateTime SearchForNewDateOfTest(DateTime date)
         {
             DateTime closestDate = DateTime.Now;
             foreach (var item in GetAllTests())
             {
-                if (item.TestDate > date && item.TestDate < closestDate && IsTesterAvailable(item.TestDate) == true)
+                if (item.TestDate > date && item.TestDate < closestDate && GetAvailableTesters(item.TestDate).Count() > 0)
                 {
                     closestDate = item.TestDate;
                 }
@@ -306,26 +290,24 @@ namespace BL
             return false;
         }
 
-        // מספר מבחנים שתלמיד רשום אליהם
-        public int TestsSum(Trainee trainee)
-        {
-            return GetAllTests(gat => gat.TraineeID == trainee.ID).Count();
-        }
 
-        // האם תלמיד עבר מבחן טסט בהצלחה
-        public bool PassedTest(long traineeID, long testID)
-        {
-            Trainee t1 = GetTrainee(traineeID);
-            Test t2 = GetTest(testID);
-            if (t1 != null && t2 != null)
-            {
-                if (t2.Result == Pass.Passed)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //public int Distance(string address1, string address2)
+        //{
+        //    var drivingDirectionRequest = new DirectionsRequest
+        //    {
+        //        TravelMode = TravelMode.Walking,
+        //        Origin = address1,
+        //        Destination = address2,
+        //    };
+        //    DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
+        //    Route route = drivingDirections.Routes.First();
+        //    Leg leg = route.Legs.First();
+        //    return leg.Distance.Value;
+        //
+        // }
 
         // כל הבוחנים שגרים בסביבת הכתובת המבוקשת
         public IEnumerable<Tester> GetDistance(int adrs)
@@ -337,39 +319,46 @@ namespace BL
             return GetAllTesters(gat => gat.MaxDistanceInKilometers < adrs);
         }
 
-        // כל הבוחנים שפנויים באותה שעה 
-        public IEnumerable<Tester> GetAvailableTesters(DateTime date)
+        // מספר מבחנים שתלמיד רשום אליהם
+        public int TestsSum(Trainee trainee)
         {
-            return GetAllTesters(gat => gat.IsWorking(date) == true);
-        }
-
-        // כל המבחנים לפי יום
-        public IEnumerable<Test> GetTestsByDay()
-        {
-            return null;
+            return GetAllTests(gat => gat.TraineeID == trainee.ID).Count();
         }
 
         // האם תלמיד עמד בדרישות של המבחן
-        public bool PassedRequirements(long testID, long traineeID)
+        public bool PassedTest(long traineeID)
         {
-            Test t1 = GetTest(testID);
-            if (t1.TraineeID == traineeID)
-
+            Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
+            t1.Result = Pass.Passed;
+            foreach (var item in t1.Requirements)
             {
-                foreach (var item in t1.Requirements)
+                if (item.Value != Pass.Passed)
                 {
-                    if (item.Value != Pass.Passed)
-                    {
-                        return false;
-                    }
+                    t1.Result = Pass.Failed;
                 }
-                return true;
             }
-            throw new Exception();
+            return t1.Result == Pass.Passed;
+        }
+
+        // כל הבוחנים שפנויים באותה שעה 
+        public IEnumerable<Tester> GetAvailableTesters(DateTime date)
+        {
+            return GetAllTesters(gat => gat.IsWorking(date) == true && gat.IsAvailable(date) == true);
+        }
+
+        // כל המבחנים לפי יום
+        public IEnumerable<Test> GetTestsByDay(DayOfWeek dayOfWeek)
+        {
+            return GetAllTests(gat => gat.TestDate.DayOfWeek == dayOfWeek);
         }
 
 
+
         //Predicate<Test>
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         // רשימת בוחנים מכווצת לפי ההתמחות שלהם
         public IEnumerable<IGrouping<CarType, Tester>> TestersExperty(bool sorted = false)

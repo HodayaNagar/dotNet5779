@@ -52,18 +52,18 @@ namespace BL
         #endregion
 
         double DifferenceBetweenTwoDates(Test test, long traineeID);
-        bool IsTesterAvailable(DateTime test);
         DateTime SearchForNewDateOfTest(DateTime date);
         bool HasTestAtSameDate(Test test, long testerID, long traineeID);
 
 
+        //int Distance(string address1, string address2);
 
-
-        int TestsSum(Trainee trainee);
-        bool PassedTest(long traineeID, long testID);
         IEnumerable<Tester> GetDistance(int adrs);
+        int TestsSum(Trainee trainee);
+        bool PassedTest(long traineeID);
         IEnumerable<Tester> GetAvailableTesters(DateTime date);
-        IEnumerable<Test> GetTestsByDay();
+        IEnumerable<Test> GetTestsByDay(DayOfWeek dayOfWeek);
+
 
 
 
