@@ -1,33 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BE
 {
     public class Test
     {
-        public int TestID { get; set; }
+        public long TestID { get; set; }
         public int TraineeID { get; set; }
         public int TesterID { get; set; }
-        public DateTime Date { get; set; }
+        
+        public DateTime TestTime { get; set; }
         //   public TimeSpan Time { get; set; }
         public Address StartingPoint { get; set; }
-        public Dictionary<string, Pass> Requirements = new Dictionary<string, Pass>()
-                    {
-                      { "Distance" , Pass.Failed },
-                      { "reverse" , Pass.Failed },
-                      { "Mirrors" , Pass.Failed },
-                      { "signals" , Pass.Failed }
-                    };
-        public Pass Success { get; set; }
-        public String Comment { get; set; }
+        public Dictionary<TestCriterion, Pass> Requirements { get; set; }
+
+        public Pass Result { get; set; }
+        public String Comments { get; set; }
         public CarType CarType { get; set; }
+
+        public DateTime TestDate { get => TestTime.Date; }
+
+        public Test()
+        {
+            Requirements = new Dictionary<TestCriterion, Pass>();
+                    //{
+                    //  { "Distance" , Pass.Failed },
+                    //  { "reverse" , Pass.Failed },
+                    //  { "Mirrors" , Pass.Failed },
+                    //  { "signals" , Pass.Failed }
+                    //};
+        }
+
 
         public override string ToString()
         {
-            return $"test ID number : {TestID} /n trainee number : {TraineeID} /n tester number : {TesterID} /n date : {Date}  /n starting point address : {StartingPoint} /n success : {Success} /n comment of tester : {Comment} /n";
+            return $"Test ID: {TestID}{Environment.NewLine}Trainee ID: {TraineeID}{Environment.NewLine}Tester ID: {TesterID}{Environment.NewLine}Test Time: {TestTime.ToString("dd/MM/yyyy HH:mm")}{Environment.NewLine}Starting Point: {StartingPoint}{Environment.NewLine}Result: {Result}{Environment.NewLine}Tester Comments: {Comments}{Environment.NewLine}";
         }
     }
 }

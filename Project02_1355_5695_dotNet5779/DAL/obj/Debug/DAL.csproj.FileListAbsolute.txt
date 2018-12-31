@@ -7,3 +7,7 @@ C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\bin\De
 C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.dll
 C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.pdb
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.dll
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DAL\obj\Debug\DAL.pdb

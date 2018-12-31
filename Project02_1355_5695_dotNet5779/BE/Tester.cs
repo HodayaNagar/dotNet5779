@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BE
 {
@@ -15,20 +11,18 @@ namespace BE
         public DateTime BirthDate { get; set; }
         public Gender Gender { get; set; }
         public Address Address { get; set; }
+        public string MobileNumber { get; set; }
 
-        public int Experience { get; set; }
-        public CarType ExpertiseCar { get; set; }
+        //public int Experience { get; set; }
+        public int Seniority { get; set; } // ותק בעבודה
+        //public CarType ExpertiseCar { get; set; }
+        public CarType CarSpecializtion { get; set; }
         public int MaxWeeklyTests { get; set; }
         public int WeeklyTests { get; set; }
-        public int MaxDistance { get; set; }
-        public bool[,] WorkSchedule = new bool[5, 6];
-        //{
-        //            { true, true, true, true, true, true },
-        //            { true, true, true, true, true, true },
-        //            { true, true, true, true, true, true },
-        //            { true, true, true, true, true, true },
-        //            { true, true, true, true, true, true }
-        //};
+        public int MaxDistanceInKilometers { get; set; }
+
+        public bool[,] WorkingSchedule { get; set; }
+
 
         // public List<int> RegisteredTestList { get; set; }
 
@@ -47,14 +41,23 @@ namespace BE
         //    }
         //}
 
-        public bool isWorking(DateTime date)
+        public Tester()
         {
-            return WorkSchedule[(int)date.DayOfWeek, date.Hour] == true;
+            WorkingSchedule = new bool[Configuration.WorkingDaysInWeek, Configuration.WorkingHoursInDay];
+
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 5; j++)
+                    WorkingSchedule[i, j] = true;
+        }
+
+        public bool IsWorking(DateTime date)
+        {
+            return WorkingSchedule[(int)date.DayOfWeek, date.Hour] == true;
         }
 
         public override string ToString()
         {
-            return $"years of experience : {Experience} /n experty of car : {ExpertiseCar} /n max number of test in week : {MaxWeeklyTests} /n max distance of address tester can test : {MaxDistance} /n";
+            return $"Seniority: {Seniority}{Environment.NewLine}Car Specializtion: {CarSpecializtion}{Environment.NewLine}Max Number of Tests in Week: {MaxWeeklyTests}{Environment.NewLine}Max Distance from Trainee Address: {MaxDistanceInKilometers}(km){Environment.NewLine}";
         }
     }
 }

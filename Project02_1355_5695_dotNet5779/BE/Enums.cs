@@ -17,4 +17,9 @@
     {
         Passed, Failed, None
     }
+
+    public enum TestCriterion
+    {
+
+    }
 }

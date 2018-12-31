@@ -140,14 +140,14 @@ namespace BL
             {
                 if (item.TraineeID == test.TraineeID)
                 {
-                    lastTest = item.Date;
+                    lastTest = item.TestTime;
                 }
             }
 
             // בודקים את הפרש המבחן הקודם אם היה למבחן החדש
-            if ((test.Date - lastTest).TotalDays < BE.Configuration.MinGapTest)
+            if ((test.TestTime - lastTest).TotalDays < BE.Configuration.MinGapTest)
             {
-                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {(test.Date - lastTest).TotalDays} days passed since the last test.");
+                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {(test.TestTime - lastTest).TotalDays} days passed since the last test.");
             }
 
             // בודקים אם בוחן עבר את מקסימום המבחנים לשבוע
@@ -157,14 +157,14 @@ namespace BL
             }
 
             //לא ניתן לקבוע מבחן לתלמיד שעשה פחות מ20 שיעורים
-            if (trainee.LessonsNumber < Configuration.MinLessons)
+            if (trainee.TotalLessonsNumber < Configuration.MinLessons)
             {
-                throw new Exception($"Trainee did not do { Configuration.MinLessons } lessons, he lackes {Configuration.MinLessons - trainee.LessonsNumber} lessons.");
+                throw new Exception($"Trainee did not do { Configuration.MinLessons } lessons, he lackes {Configuration.MinLessons - trainee.TotalLessonsNumber} lessons.");
             }
 
 
             //לא ניתן לקבוע מבחן על סוג רכב מסוים לתלמיד שכבר עבר בהצלחה מבחן נהיגה על סוג כזה
-            if (test.Success == Pass.Passed)
+            if (test.Result == Pass.Passed)
             {
                 // בודקים איזה סוג רכב למד התלמיד
                 if (trainee.CarTrained == test.CarType)
@@ -174,7 +174,7 @@ namespace BL
             }
 
             //יש להתאים בין סוג הרכב שעליו למד התלמיד להתמחות של הבוחן
-            if (trainee.CarTrained != tester.ExpertiseCar)
+            if (trainee.CarTrained != tester.CarSpecializtion)
             {
                 throw new Exception("Tester does not suitable for this type of car.");
             }
@@ -254,7 +254,7 @@ namespace BL
             Test t2 = GetTest(idTest);
             if (t1 != null && t2 != null)
             {
-                if (t2.Success == Pass.Passed)
+                if (t2.Result == Pass.Passed)
                 {
                     return true;
                 }
@@ -262,18 +262,20 @@ namespace BL
             return false;
         }
 
-        // כל הבוחנים שגרים במרחק רנדומלי מכתובת
+        // כל הבוחנים שגרים בסביבת הכתובת המבוקשת
         public IEnumerable<Tester> GetDistance(int adrs)
         {
+            //TO DO:
+            // 1. בדיקת מה המ
             Random r = new Random();
             adrs = r.Next(1, 10000);
-            return GetAllTesters(gat => gat.MaxDistance < adrs);
+            return GetAllTesters(gat => gat.MaxDistanceInKilometers < adrs);
         }
 
         // כל הבוחנים שפנויים באותה שעה 
         public IEnumerable<Tester> GetAvailableTesters(DateTime date)
         {
-            return GetAllTesters(gat => gat.isWorking(date) == true);
+            return GetAllTesters(gat => gat.IsWorking(date) == true);
         }
 
         // כל המבחנים לפי יום
@@ -311,13 +313,13 @@ namespace BL
             {
                 return from Tester t in GetAllTesters()
                        orderby t.FullName
-                       group t by t.ExpertiseCar;
+                       group t by t.CarSpecializtion;
             }
             else
             {
                 return from Tester t in GetAllTesters()
                        orderby t.ID
-                       group t by t.ExpertiseCar;
+                       group t by t.CarSpecializtion;
             }
         }
 
@@ -345,13 +347,13 @@ namespace BL
             {
                 return from Trainee t in GetAllTrainees()
                        orderby t.FullName
-                       group t by t.FullNameDrivingInstructor;
+                       group t by t.DrivingInstructorFullName;
             }
             else
             {
                 return from Trainee t in GetAllTrainees()
                        orderby t.ID
-                       group t by t.FullNameDrivingInstructor;
+                       group t by t.DrivingInstructorFullName;
             }
         }
 

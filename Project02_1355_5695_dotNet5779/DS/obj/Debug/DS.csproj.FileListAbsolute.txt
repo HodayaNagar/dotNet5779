@@ -5,3 +5,12 @@ C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\bin\Deb
 C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.csprojResolveAssemblyReference.cache
 C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.dll
 C:\Users\HP-PC\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.pdb
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\bin\Debug\DS.dll
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\bin\Debug\DS.pdb
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\bin\Debug\BE.dll
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\bin\Debug\BE.pdb
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.csprojAssemblyReference.cache
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.csproj.CoreCompileInputs.cache
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.csproj.CopyComplete
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.dll
+C:\Users\ADSL\Source\Repos\dotNet5779\Project02_1355_5695_dotNet5779\DS\obj\Debug\DS.pdb

@@ -14,7 +14,8 @@ namespace DS
         public static void data()
         {
             int RunningID = 1000;
-            int tRunningID = 12345678;
+            int tRunningID = 12345674; // 12345678 - זאת תעודת זהות לא תקינה
+            // אתן אמורות לבדוק תקינות תעודת זהות, לא?
 
 
             #region Tester data
@@ -25,8 +26,8 @@ namespace DS
                 tester = new Tester()
                 {
                     ID = i,
-                    FirstName = $"Tester{i}",
-                    LastName = $"ID{RunningID++}",
+                    FirstName = $"Tester {i}",
+                    LastName = $"ID {RunningID++}",
                     BirthDate = new DateTime(2000, 12, 12),
                     Gender = Gender.Male,
                     Address = new Address()
@@ -35,10 +36,10 @@ namespace DS
                         StreetName = "Jaffa",
                         BuildingNumber = 12,
                     },
-                    Experience = 15,
+                    Seniority = 15,
                     MaxWeeklyTests = 1,
-                    ExpertiseCar = CarType.Private,
-                    WorkSchedule = new bool[5, 6]
+                    CarSpecializtion = CarType.Private,
+                    WorkingSchedule = new bool[Configuration.WorkingDaysInWeek, Configuration.WorkingHoursInDay]
                     {
                         { false, false, true, false, false, true },
                         { false, false, false, true, true, false },
@@ -46,7 +47,7 @@ namespace DS
                         { false, false, true, false, false, false },
                         { true, false, false, false, true, false }
                     },
-                    MaxDistance = 5
+                    MaxDistanceInKilometers = 5
                 };
 
                 testersList.Add(tester);
@@ -74,9 +75,9 @@ namespace DS
                     CarTrained = CarType.Private,
                     GearType = GearType.Automatic,
                     DrivingSchool = "smartdrive",
-                    FirstNameDrivingInstructor = $"Instructor{i - 1050 + 1}",
-                    LastNameDrivingInstructor = $"of trainee ID:{i}",
-                    LessonsNumber = 28
+                    DrivingInstructorFirstName = $"Instructor{i - 1050 + 1}",
+                    DrivingInstructorLastName = $"of trainee ID:{i}",
+                    TotalLessonsNumber = 28
                 };
 
                 traineesList.Add(trainee);
@@ -94,7 +95,7 @@ namespace DS
                     TestID = tRunningID,
                     TraineeID = i + 1000,
                     TesterID = i + 1010,
-                    Date = new DateTime(2019, 01, i + 1),
+                    TestTime = new DateTime(2019, 01, i + 1),
                     //Time = new TimeSpan(i, i, 0),
                     StartingPoint = new Address()
                     {
@@ -102,15 +103,15 @@ namespace DS
                         StreetName = "Aluf David",
                         BuildingNumber = 187
                     },
-                    Requirements = new Dictionary<string, Pass>()
-                    {
-                      { "Distance" , Pass.Failed },
-                      { "reverse" , Pass.Failed },
-                      { "Mirrors" , Pass.Failed },
-                      { "signals" , Pass.Failed }
-                    },
-                    Success = BE.Pass.Failed,
-                    Comment = "trainee drives too fast"
+                    //Requirements = new Dictionary<string, Pass>()
+                    //{
+                    //  { "Distance" , Pass.Failed },
+                    //  { "reverse" , Pass.Failed },
+                    //  { "Mirrors" , Pass.Failed },
+                    //  { "signals" , Pass.Failed }
+                    //},
+                    Result = Pass.Failed,
+                    Comments = "trainee drives too fast"
                 };
 
                 testsList.Add(test);

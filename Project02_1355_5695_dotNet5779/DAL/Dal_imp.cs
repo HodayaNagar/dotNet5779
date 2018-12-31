@@ -30,9 +30,9 @@ namespace DAL
             testersList.Add(tester);
         }
 
-        public bool RemoveTester(int id)
+        public bool RemoveTester(int testerID)
         {
-            Tester t = GetTester(id);
+            Tester t = GetTester(testerID);
             if (t == null)
             {
                 throw new Exception("Tester with the same id not found");
@@ -40,7 +40,7 @@ namespace DAL
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
 
             // t.RegisteredTestList.Clear();
-            testsList.RemoveAll(tl => tl.TesterID == id);
+            testsList.RemoveAll(tl => tl.TesterID == testerID);
             return testersList.Remove(t);
         }
 
@@ -54,9 +54,9 @@ namespace DAL
             testersList[index] = tester;
         }
 
-        public Tester GetTester(int id)
+        public Tester GetTester(int testerID)
         {
-            return testersList.FirstOrDefault(tl => tl.ID == id);
+            return testersList.FirstOrDefault(tl => tl.ID == testerID);
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
@@ -80,16 +80,16 @@ namespace DAL
             traineesList.Add(trainee);
         }
 
-        public bool RemoveTrainee(int id)
+        public bool RemoveTrainee(int traineeID)
         {
-            Trainee t = GetTrainee(id);
+            Trainee t = GetTrainee(traineeID);
             if (t == null)
             {
                 throw new Exception("Trainee with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
             // t.RegisteredTestList.Clear();
-            testsList.RemoveAll(tl => tl.TraineeID == id);
+            testsList.RemoveAll(tl => tl.TraineeID == traineeID);
             return traineesList.Remove(t);
         }
 
@@ -103,9 +103,9 @@ namespace DAL
             traineesList[index] = trainee;
         }
 
-        public Trainee GetTrainee(int id)
+        public Trainee GetTrainee(int traineeID)
         {
-            return traineesList.FirstOrDefault(tl => tl.ID == id);
+            return traineesList.FirstOrDefault(tl => tl.ID == traineeID);
         }
 
         public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
@@ -120,7 +120,8 @@ namespace DAL
         #endregion
 
         #region Test Functions
-        public void AddTest(Test test, int idTester, int idTrainee)
+
+        public void AddTest(Test test, int testerID, int traineeID)
         {
             // צריך לבדוק שבוחן ונבחן שרשומים קיימים ברשימות ושהמבחן לא קיים ברשימה
             Test t1 = GetTest(test.TestID);
@@ -139,18 +140,18 @@ namespace DAL
                 throw new Exception("Trainee with the same id not found");
             }
             test.TestID = Configuration.RunningTestID++;
-            test.TesterID = idTester;
-            test.TraineeID = idTrainee;
+            test.TesterID = testerID;
+            test.TraineeID = traineeID;
             // t2.RegisteredTestList.Add(test.TestID);
             // t3.RegisteredTestList.Add(test.TestID);
             testsList.Add(test);
         }
 
-        public bool RemoveTest(int id)
+        public bool RemoveTest(long testID)
         {
-            Test t = GetTest(id);
+            Test t = GetTest(testID);
             if (t == null)
-                throw new Exception("Test with the same id not found");
+                throw new Exception("Test was not found");
             // צריך לבדוק אם יש בוחן או נבחן שרשומים למבחן
             Tester t2 = GetTester(t.TesterID);
             if (t2 != null)
@@ -162,8 +163,7 @@ namespace DAL
             {
                 throw new Exception("Trainee with the same id is registered to this test");
             }
-            //    t2.RegisteredTestList.Remove(id);
-            //   t3.RegisteredTestList.Remove(id);
+
             return testsList.Remove(t);
         }
 
@@ -171,15 +171,14 @@ namespace DAL
         {
             int index = testsList.FindIndex(tl => tl.TestID == test.TestID);
             if (index == -1)
-            {
-                throw new Exception("Test with the same id not found");
-            }
+                throw new Exception("Test doesn't exist");
+
             testsList[index] = test;
         }
 
-        public Test GetTest(int id)
+        public Test GetTest(long testID)
         {
-            return testsList.FirstOrDefault(tl => tl.TestID == id);
+            return testsList.FirstOrDefault(tl => tl.TestID == testID);
         }
 
         public IEnumerable<Test> GetAllTests(Func<Test, bool> predicate = null)
@@ -190,6 +189,7 @@ namespace DAL
             }
             return testsList.Where(predicate);
         }
+
         #endregion
     }
 }
