@@ -24,8 +24,6 @@ namespace BE
         public string FullName { get => $"{FirstName} {LastName}"; }
         public string DrivingInstructorFullName { get => $"{DrivingInstructorFirstName} {DrivingInstructorLastName}"; }
 
-        // public List<int> RegisteredTestList { get; set; }
-
         public override string ToString()
         {
             return $"Trained on Car of Type: {CarTrained}{Environment.NewLine}Gear Type: {GearType}{Environment.NewLine}Driving School: {DrivingSchool}{Environment.NewLine}Total Lessons Number: {TotalLessonsNumber}{Environment.NewLine}Instructor Name: {DrivingInstructorFullName}{Environment.NewLine}";
