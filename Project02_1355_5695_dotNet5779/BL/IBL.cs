@@ -13,11 +13,11 @@ namespace BL
 
         void AddTester(Tester tester);
 
-        bool RemoveTester(long testerID);
+        bool RemoveTester(int testerID);
 
         void UpdateTester(Tester tester);
 
-        Tester GetTester(long testerID);
+        Tester GetTester(int testerID);
 
         IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null);
 
@@ -27,11 +27,11 @@ namespace BL
 
         void AddTrainee(Trainee trainee);
 
-        bool RemoveTrainee(long traineeID);
+        bool RemoveTrainee(int traineeID);
 
         void UpdateTrainee(Trainee trainee);
 
-        Trainee GetTrainee(long traineeID);
+        Trainee GetTrainee(int traineeID);
 
         IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null);
 
@@ -39,7 +39,7 @@ namespace BL
 
         #region Test Functions
 
-        void AddTest(Test test, long testerID, long traineeID);
+        void AddTest(Test test, int testerID, int traineeID);
 
         bool RemoveTest(long testID);
 
@@ -51,16 +51,16 @@ namespace BL
 
         #endregion
 
-        double DifferenceBetweenTwoDates(Test test, long traineeID);
+        double DifferenceBetweenTwoDates(Test test, int traineeID);
         DateTime SearchForNewDateOfTest(DateTime date);
-        bool HasTestAtSameDate(Test test, long testerID, long traineeID);
+        bool HasTestAtSameDate(Test test, int testerID, int traineeID);
 
 
-        //int Distance(string address1, string address2);
+        double Distance(string address1, string address2);
 
-        IEnumerable<Tester> GetDistance(int adrs);
+        IEnumerable<Tester> GetDistance(string adrs);
         int TestsSum(Trainee trainee);
-        bool PassedTest(long traineeID);
+        bool PassedTest(int traineeID);
         IEnumerable<Tester> GetAvailableTesters(DateTime date);
         IEnumerable<Test> GetTestsByDay(DayOfWeek dayOfWeek);
 

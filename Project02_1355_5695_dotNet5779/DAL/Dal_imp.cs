@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DAL
 {
-    public class Dal_imp : Idal
+    public class Dal_imp : IDAL
     {
         private static List<Tester> testersList;
         private static List<Trainee> traineesList;
@@ -30,7 +30,7 @@ namespace DAL
             testersList.Add(tester);
         }
 
-        public bool RemoveTester(long testerID)
+        public bool RemoveTester(int testerID)
         {
             Tester t = GetTester(testerID);
             if (t == null)
@@ -52,7 +52,7 @@ namespace DAL
             testersList[index] = tester;
         }
 
-        public Tester GetTester(long testerID)
+        public Tester GetTester(int testerID)
         {
             return testersList.FirstOrDefault(tl => tl.ID == testerID);
         }
@@ -78,7 +78,7 @@ namespace DAL
             traineesList.Add(trainee);
         }
 
-        public bool RemoveTrainee(long traineeID)
+        public bool RemoveTrainee(int traineeID)
         {
             Trainee t = GetTrainee(traineeID);
             if (t == null)
@@ -100,7 +100,7 @@ namespace DAL
             traineesList[index] = trainee;
         }
 
-        public Trainee GetTrainee(long traineeID)
+        public Trainee GetTrainee(int traineeID)
         {
             return traineesList.FirstOrDefault(tl => tl.ID == traineeID);
         }
@@ -118,7 +118,7 @@ namespace DAL
 
         #region Test Functions
 
-        public void AddTest(Test test, long testerID, long traineeID)
+        public void AddTest(Test test, int testerID, int traineeID)
         {
             // צריך לבדוק שבוחן ונבחן שרשומים קיימים ברשימות ושהמבחן לא קיים ברשימה
             Test t1 = GetTest(test.TestID);

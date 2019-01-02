@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    public interface Idal
+    public interface IDAL
     {
         #region Tester Functions
 
         void AddTester(Tester tester);
 
-        bool RemoveTester(long testerID);
+        bool RemoveTester(int testerID);
 
         void UpdateTester(Tester tester);
 
-        Tester GetTester(long testerID);
+        Tester GetTester(int testerID);
 
         IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null);
 
@@ -24,11 +24,11 @@ namespace DAL
 
         void AddTrainee(Trainee trainee);
 
-        bool RemoveTrainee(long traineeID);
+        bool RemoveTrainee(int traineeID);
 
         void UpdateTrainee(Trainee trainee);
 
-        Trainee GetTrainee(long traineeID);
+        Trainee GetTrainee(int traineeID);
 
         IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null);
 
@@ -36,7 +36,7 @@ namespace DAL
 
         #region Test Functions
 
-        void AddTest(Test test, long testerID, long traineeID);
+        void AddTest(Test test, int testerID, int traineeID);
 
         bool RemoveTest(long testID);
 

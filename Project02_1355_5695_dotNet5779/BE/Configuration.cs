@@ -19,7 +19,7 @@
         public const int WorkingDaysInWeek = 5;
         // מספר שעות עבודה ביום
         public const int WorkingHoursInDay = 6;
-
-
+        // הרדיוס של כדור הארץ בקילומטר
+        public const double EarthRadius = 6371.0;
     }
 }

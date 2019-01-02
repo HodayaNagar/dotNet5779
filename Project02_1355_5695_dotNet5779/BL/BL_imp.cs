@@ -1,14 +1,11 @@
 ﻿using BE;
 using DAL;
+using GoogleMaps.LocationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using GoogleMapsAPI;
-//using GoogleMapsApi;
-//using GoogleMapsApi.Entities.Directions.Request;
-//using GoogleMapsApi.Entities.Directions.Response;
 
 namespace BL
 {
@@ -37,7 +34,7 @@ namespace BL
             }
         }
 
-        public bool RemoveTester(long testerID)
+        public bool RemoveTester(int testerID)
         {
             try
             {
@@ -62,7 +59,7 @@ namespace BL
             }
         }
 
-        public Tester GetTester(long testerID)
+        public Tester GetTester(int testerID)
         {
             return DAL.FactorySingletonDal.getInstance().GetTester(testerID);
         }
@@ -91,7 +88,7 @@ namespace BL
             }
         }
 
-        public bool RemoveTrainee(long traineeID)
+        public bool RemoveTrainee(int traineeID)
         {
             try
             {
@@ -116,7 +113,7 @@ namespace BL
             }
         }
 
-        public Trainee GetTrainee(long traineeID)
+        public Trainee GetTrainee(int traineeID)
         {
             return DAL.FactorySingletonDal.getInstance().GetTrainee(traineeID);
         }
@@ -129,7 +126,7 @@ namespace BL
 
         #region Test Functions
 
-        public void AddTest(Test test, long testerID, long traineeID)
+        public void AddTest(Test test, int testerID, int traineeID)
         {
             Trainee trainee = GetTrainee(test.TraineeID);
             if (trainee == null)
@@ -248,7 +245,7 @@ namespace BL
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        public double DifferenceBetweenTwoDates(Test test, long traineeID)
+        public double DifferenceBetweenTwoDates(Test test, int traineeID)
         {
             DateTime lastTest = DateTime.Now;
             //בודקים ברשימת הטסטים האים קיים תלמיד עם אותו תז בפעם האחרונה שלו
@@ -275,7 +272,7 @@ namespace BL
             return closestDate;
         }
 
-        public bool HasTestAtSameDate(Test test, long testerID, long traineeID)
+        public bool HasTestAtSameDate(Test test, int testerID, int traineeID)
         {
             foreach (var item in GetAllTests())
             {
@@ -290,6 +287,27 @@ namespace BL
             return false;
         }
 
+        public bool IsValidId(int id)
+        {
+            if (id < 1 || id > 999999999) return false;
+            string fullId = $"{id:000000000}";
+
+            int mone = 0;
+            int incNum;
+            for (int i = 0; i < 9; i++)
+            {
+                incNum = Convert.ToInt32(fullId[i].ToString());
+                incNum *= (i % 2) + 1;
+                if (incNum > 9)
+                    incNum -= 9;
+                mone += incNum;
+            }
+            if (mone % 10 == 0)
+                return true;
+            else
+                return false;
+
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -327,32 +345,46 @@ namespace BL
 
         //}
 
+        private MapPoint GetAddressGeoLocation(string address)
+        {
+            GoogleLocationService locationService = new GoogleLocationService();
+            return locationService.GetLatLongFromAddress(address);
+        }
+
+        // מחזירה מרחק בקילומטרים בין 2 נקודות
+        private double GetDistanceBetween2Points(MapPoint point1, MapPoint point2)
+        {
+            double latitudeDistance = (point2.Latitude - point1.Latitude).ToRadians();
+            double longtitudeDistance = (point2.Longitude - point1.Longitude).ToRadians();
+
+            double lat1 = point1.Latitude.ToRadians();
+            double lat2 = point2.Latitude.ToRadians();
+
+            double a = Math.Sin(latitudeDistance / 2) * Math.Sin(latitudeDistance / 2)
+                + Math.Sin(longtitudeDistance / 2) * Math.Sin(longtitudeDistance / 2)
+                    * Math.Cos(lat1) * Math.Cos(lat2);
+
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            return Configuration.EarthRadius * c;
+        }
 
 
+        public double Distance(string address1, string address2)
+        {
+            //if (string.IsNullOrEmpty())
 
-        //public int Distance(string address1, string address2)
-        //{
-        //    var drivingDirectionRequest = new DirectionsRequest
-        //    {
-        //        TravelMode = TravelMode.Walking,
-        //        Origin = address1,
-        //        Destination = address2,
-        //    };
-        //    DirectionsResponse drivingDirections = GoogleMaps.Directions.Query(drivingDirectionRequest);
-        //    Route route = drivingDirections.Routes.First();
-        //    Leg leg = route.Legs.First();
-        //    return leg.Distance.Value;
-        //
-        // }
+            //1. מציאת המיקום בכדור הארץ (קו אורך, קו רוחב) של כל כתובת
+            MapPoint addrs1Point = GetAddressGeoLocation(address: address1);
+            MapPoint addrs2Point = GetAddressGeoLocation(address: address2);
+
+            //2. מציאת המרחק בין 2 הנקודות באמצעות חישוב מתמטי
+            return GetDistanceBetween2Points(point1: addrs1Point, point2: addrs2Point);
+        }
 
         // כל הבוחנים שגרים בסביבת הכתובת המבוקשת
-        public IEnumerable<Tester> GetDistance(int adrs)
+        public IEnumerable<Tester> GetDistance(string adrs)
         {
-            //TO DO:
-            // 1. בדיקת מה המ
-            Random r = new Random();
-            adrs = r.Next(1, 10000);
-            return GetAllTesters(gat => gat.MaxDistanceInKilometers < adrs);
+            return GetAllTesters(gat => Distance(gat.Address.ToString(), adrs) < gat.MaxDistanceInKilometers);
         }
 
         // מספר מבחנים שתלמיד רשום אליהם
@@ -362,7 +394,7 @@ namespace BL
         }
 
         // האם תלמיד עמד בדרישות של המבחן
-        public bool PassedTest(long traineeID)
+        public bool PassedTest(int traineeID)
         {
             Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
             t1.Result = Pass.Passed;

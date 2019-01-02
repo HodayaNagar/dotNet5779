@@ -13,8 +13,8 @@ namespace DS
 
         public static void data()
         {
-            long RunningID = 10000000;
-            long tRunningID = 12345674; // 12345678 - זאת תעודת זהות לא תקינה
+            int RunningID = 10000000;
+            int tRunningID = 12345674; // 12345678 - זאת תעודת זהות לא תקינה
             // אתן אמורות לבדוק תקינות תעודת זהות, לא?
 
 

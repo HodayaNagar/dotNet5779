@@ -4,7 +4,7 @@ namespace BE
 {
     public class Tester
     {
-        public long ID { get; set; }
+        public int ID { get; set; }
 
         public string FullName { get => $"{FirstName} {LastName}"; }
         public String FirstName { get; set; }

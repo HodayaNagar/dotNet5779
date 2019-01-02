@@ -6,8 +6,8 @@ namespace BE
     public class Test
     {
         public long TestID { get; set; }
-        public long TraineeID { get; set; }
-        public long TesterID { get; set; }
+        public int TraineeID { get; set; }
+        public int TesterID { get; set; }
 
         public DateTime TestTime { get; set; }
         public Address StartingPoint { get; set; }
