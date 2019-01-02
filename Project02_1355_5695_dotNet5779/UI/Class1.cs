@@ -1,18 +1,22 @@
-﻿using BE;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
-namespace DS
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BE;
+using BL;
+namespace UI
 {
-    public class DataSource
+    class Program
     {
+
         public static List<Tester> testersList = new List<Tester>();
         public static List<Trainee> traineesList = new List<Trainee>();
         public static List<Test> testsList = new List<Test>();
 
-
-        public static void data()
+        static void Main(string[] args)
         {
+
             long RunningID = 10000000;
             long tRunningID = 12345674; // 12345678 - זאת תעודת זהות לא תקינה
             // אתן אמורות לבדוק תקינות תעודת זהות, לא?
@@ -116,5 +120,7 @@ namespace DS
             }
             #endregion
         }
+
+        
     }
 }
