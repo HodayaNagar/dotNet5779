@@ -11,22 +11,27 @@ namespace BL
 {
     public class BL_imp : IBL
     {
+        static DAL.IDAL dal = DAL.FactorySingletonDal.getInstance();
         #region Tester Functions
 
         public void AddTester(Tester tester)
         {
+            if (IsValidId(tester.ID) == false)
+            {
+                throw new Exception($"Tester ID is valid");
+            }
             if (DateTime.Now.Year - tester.BirthDate.Year < Configuration.MinTesterAge)
             {
                 throw new Exception($"Tester is under {Configuration.MinTesterAge}");
             }
             if (DateTime.Now.Year - tester.BirthDate.Year > Configuration.MaxTesterAge)
             {
-                throw new Exception($"Tester is over {Configuration.MinTesterAge}, it's pension age");
+                throw new Exception($"Tester is over {Configuration.MaxTesterAge}, it's pension age");
             }
-
+            
             try
             {
-                DAL.FactorySingletonDal.getInstance().AddTester(tester);
+                dal.AddTester(tester);
             }
             catch (Exception exception)
             {
@@ -36,6 +41,10 @@ namespace BL
 
         public bool RemoveTester(int testerID)
         {
+            if (IsValidId(testerID) == false)
+            {
+                throw new Exception($"Tester ID is valid");
+            }
             try
             {
                 DAL.FactorySingletonDal.getInstance().RemoveTester(testerID);
@@ -49,6 +58,10 @@ namespace BL
 
         public void UpdateTester(Tester tester)
         {
+            if (IsValidId(tester.ID) == false)
+            {
+                throw new Exception($"Tester ID is valid");
+            }
             try
             {
                 DAL.FactorySingletonDal.getInstance().UpdateTester(tester);
@@ -61,6 +74,10 @@ namespace BL
 
         public Tester GetTester(int testerID)
         {
+            if (IsValidId(testerID) == false)
+            {
+                throw new Exception($"Tester ID is valid");
+            }
             return DAL.FactorySingletonDal.getInstance().GetTester(testerID);
         }
 
@@ -74,10 +91,15 @@ namespace BL
 
         public void AddTrainee(Trainee trainee)
         {
+            if (IsValidId(trainee.ID) == false)
+            {
+                throw new Exception($"Trainee ID is valid");
+            }
             if (DateTime.Now.Year - trainee.BirthDate.Year < Configuration.MinTraineeAge)
             {
                 throw new Exception($"Trainee is under {Configuration.MinTraineeAge}");
             }
+            
             try
             {
                 DAL.FactorySingletonDal.getInstance().AddTrainee(trainee);
@@ -90,6 +112,10 @@ namespace BL
 
         public bool RemoveTrainee(int traineeID)
         {
+            if (IsValidId(traineeID) == false)
+            {
+                throw new Exception($"Trainee ID is valid");
+            }
             try
             {
                 DAL.FactorySingletonDal.getInstance().RemoveTrainee(traineeID);
@@ -103,6 +129,10 @@ namespace BL
 
         public void UpdateTrainee(Trainee trainee)
         {
+            if (IsValidId(trainee.ID) == false)
+            {
+                throw new Exception($"Trainee ID is valid");
+            }
             try
             {
                 DAL.FactorySingletonDal.getInstance().UpdateTrainee(trainee);
@@ -115,6 +145,10 @@ namespace BL
 
         public Trainee GetTrainee(int traineeID)
         {
+            if (IsValidId(traineeID) == false)
+            {
+                throw new Exception($"Trainee ID is valid");
+            }
             return DAL.FactorySingletonDal.getInstance().GetTrainee(traineeID);
         }
 
@@ -128,6 +162,14 @@ namespace BL
 
         public void AddTest(Test test, int testerID, int traineeID)
         {
+            if (IsValidId(testerID) == false)
+            {
+                throw new Exception($"Tester ID is valid");
+            }
+            if (IsValidId(traineeID) == false)
+            {
+                throw new Exception($"Trainee ID is valid");
+            }
             Trainee trainee = GetTrainee(test.TraineeID);
             if (trainee == null)
             {
@@ -311,39 +353,7 @@ namespace BL
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //public static TzStatus ValidateID(string IDNum)
-        //{
 
-        //    // Validate correct input
-        //    if (!System.Text.RegularExpressions.Regex.IsMatch(IDNum, @"^\d{5,9}$"))
-        //        return TzStatus.R_ELEGAL_INPUT;
-
-        //    // The number is too short - add leading 0000
-        //    if (IDNum.Length < 9)
-        //    {
-        //        while (IDNum.Length < 9)
-        //        {
-        //            IDNum = '0' + IDNum;
-        //        }
-        //    }
-
-        //    // CHECK THE ID NUMBER
-        //    int mone = 0;
-        //    int incNum;
-        //    for (int i = 0; i < 9; i++)
-        //    {
-        //        incNum = Convert.ToInt32(IDNum[i].ToString());
-        //        incNum *= (i % 2) + 1;
-        //        if (incNum > 9)
-        //            incNum -= 9;
-        //        mone += incNum;
-        //    }
-        //    if (mone % 10 == 0)
-        //        return TzStatus.R_VALID;
-        //    else
-        //        return TzStatus.R_NOT_VALID;
-
-        //}
 
         private MapPoint GetAddressGeoLocation(string address)
         {

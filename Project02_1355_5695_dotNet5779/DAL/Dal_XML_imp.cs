@@ -10,6 +10,8 @@ namespace DAL
 {
     public class Dal_XML_imp : IDAL
     {
+
+
         public void AddTest(Test test, int testerID, int traineeID)
         {
             XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Tests.xml");
@@ -23,6 +25,12 @@ namespace DAL
 
         public void AddTester(Tester tester)
         {
+            //Tester t = GetTester(tester.ID);
+            //if (t != null)
+            //{
+            //    throw new Exception("Tester with the same id already exists");
+            //}
+
             XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Testers.xml");
             if (xEle != null)
             {
@@ -69,6 +77,8 @@ namespace DAL
 
         public Tester GetTester(int testerID)
         {
+            XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Testers.xml");
+
             throw new NotImplementedException();
         }
 
