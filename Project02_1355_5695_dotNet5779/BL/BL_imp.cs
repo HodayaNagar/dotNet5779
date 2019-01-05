@@ -4,6 +4,7 @@ using GoogleMaps.LocationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,10 @@ namespace BL
 {
     public class BL_imp : IBL
     {
-        static DAL.IDAL dal = DAL.FactorySingletonDal.getInstance();
+        //static DAL.IDAL dal = dal;
+
+        private static DAL.IDAL dal = DAL.FactorySingletonDal.Current;
+
         #region Tester Functions
 
         public void AddTester(Tester tester)
@@ -28,7 +32,7 @@ namespace BL
             {
                 throw new Exception($"Tester is over {Configuration.MaxTesterAge}, it's pension age");
             }
-            
+
             try
             {
                 dal.AddTester(tester);
@@ -47,7 +51,7 @@ namespace BL
             }
             try
             {
-                DAL.FactorySingletonDal.getInstance().RemoveTester(testerID);
+                dal.RemoveTester(testerID);
             }
             catch (Exception exception)
             {
@@ -64,7 +68,7 @@ namespace BL
             }
             try
             {
-                DAL.FactorySingletonDal.getInstance().UpdateTester(tester);
+                dal.UpdateTester(tester);
             }
             catch (Exception exception)
             {
@@ -78,12 +82,12 @@ namespace BL
             {
                 throw new Exception($"Tester ID is valid");
             }
-            return DAL.FactorySingletonDal.getInstance().GetTester(testerID);
+            return dal.GetTester(testerID);
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
         {
-            return DAL.FactorySingletonDal.getInstance().GetAllTesters(predicate);
+            return dal.GetAllTesters(predicate);
         }
         #endregion
 
@@ -99,10 +103,10 @@ namespace BL
             {
                 throw new Exception($"Trainee is under {Configuration.MinTraineeAge}");
             }
-            
+
             try
             {
-                DAL.FactorySingletonDal.getInstance().AddTrainee(trainee);
+                dal.AddTrainee(trainee);
             }
             catch (Exception exception)
             {
@@ -118,7 +122,7 @@ namespace BL
             }
             try
             {
-                DAL.FactorySingletonDal.getInstance().RemoveTrainee(traineeID);
+                dal.RemoveTrainee(traineeID);
             }
             catch (Exception exception)
             {
@@ -135,7 +139,7 @@ namespace BL
             }
             try
             {
-                DAL.FactorySingletonDal.getInstance().UpdateTrainee(trainee);
+                dal.UpdateTrainee(trainee);
             }
             catch (Exception exception)
             {
@@ -149,12 +153,12 @@ namespace BL
             {
                 throw new Exception($"Trainee ID is valid");
             }
-            return DAL.FactorySingletonDal.getInstance().GetTrainee(traineeID);
+            return dal.GetTrainee(traineeID);
         }
 
         public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
         {
-            return DAL.FactorySingletonDal.getInstance().GetAllTrainees(predicate);
+            return dal.GetAllTrainees(predicate);
         }
         #endregion
 
@@ -183,7 +187,7 @@ namespace BL
             }
 
             // בודקים את הפרש המבחן הקודם אם היה למבחן החדש
-            if (DifferenceBetweenTwoDates(test, traineeID) < BE.Configuration.MinGapTest)
+            if (DifferenceBetweenTwoDates(test, traineeID) < BE.Configuration.MinGapTest && DifferenceBetweenTwoDates(test, traineeID)>0)
             {
                 throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {DifferenceBetweenTwoDates(test, traineeID)} days passed since the last test");
             }
@@ -213,14 +217,14 @@ namespace BL
             }
 
             //לא ניתן לקבוע מבחן על סוג רכב מסוים לתלמיד שכבר עבר בהצלחה מבחן נהיגה על סוג כזה
-            if (PassedTest(traineeID) == true)
-            {
-                // בודקים איזה סוג רכב למד התלמיד
-                if (trainee.CarTrained == test.CarType)
-                {
-                    throw new Exception("Trainee has already passed a test on this type of car");
-                }
-            }
+            //if (PassedTest(traineeID) == true)
+            //{
+            //    // בודקים איזה סוג רכב למד התלמיד
+            //    if (trainee.CarTrained == test.CarType)
+            //    {
+            //        throw new Exception("Trainee has already passed a test on this type of car");
+            //    }
+            //}
 
             //יש להתאים בין סוג הרכב שעליו למד התלמיד להתמחות של הבוחן
             if (trainee.CarTrained != tester.CarSpecializtion)
@@ -230,7 +234,7 @@ namespace BL
 
             try
             {
-                DAL.FactorySingletonDal.getInstance().AddTest(test, testerID, traineeID);
+                dal.AddTest(test, testerID, traineeID);
             }
             catch (Exception exception)
             {
@@ -251,7 +255,7 @@ namespace BL
 
             try
             {
-                FactorySingletonDal.getInstance().UpdateTest(test);
+                dal.UpdateTest(test);
             }
             catch (Exception exception)
             {
@@ -263,7 +267,7 @@ namespace BL
         {
             try
             {
-                DAL.FactorySingletonDal.getInstance().RemoveTest(testID);
+                dal.RemoveTest(testID);
             }
             catch (Exception exception)
             {
@@ -274,12 +278,12 @@ namespace BL
 
         public Test GetTest(long testID)
         {
-            return DAL.FactorySingletonDal.getInstance().GetTest(testID);
+            return dal.GetTest(testID);
         }
 
         public IEnumerable<Test> GetAllTests(Func<Test, bool> predicate = null)
         {
-            return DAL.FactorySingletonDal.getInstance().GetAllTests(predicate);
+            return dal.GetAllTests(predicate);
         }
         #endregion
 
@@ -378,7 +382,6 @@ namespace BL
             return Configuration.EarthRadius * c;
         }
 
-
         public double Distance(string address1, string address2)
         {
             //if (string.IsNullOrEmpty())
@@ -406,16 +409,17 @@ namespace BL
         // האם תלמיד עמד בדרישות של המבחן
         public bool PassedTest(int traineeID)
         {
-            Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
-            t1.Result = Pass.Passed;
-            foreach (var item in t1.Requirements)
-            {
-                if (item.Value != Pass.Passed)
-                {
-                    t1.Result = Pass.Failed;
-                }
-            }
-            return t1.Result == Pass.Passed;
+            //Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
+            //t1.Result = Pass.Passed;
+            //foreach (var item in t1.Requirements)
+            //{
+            //    if (item.Value != Pass.Passed)
+            //    {
+            //        t1.Result = Pass.Failed;
+            //    }
+            //}
+            //return t1.Result == Pass.Passed;
+            return true;
         }
 
         // כל הבוחנים שפנויים באותה שעה 
@@ -504,5 +508,17 @@ namespace BL
 
 
         }
+
+        public static void PrintProperty<T>(T t)
+        {
+
+            foreach (PropertyInfo item in t.GetType().GetProperties())
+            {
+                Console.WriteLine
+                    ("name: {0,-15} value: {1,-15}"
+                    , item.Name, item.GetValue(t, null));
+            }
+        }
+
     }
 }

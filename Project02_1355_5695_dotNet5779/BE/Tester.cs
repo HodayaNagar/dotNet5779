@@ -1,11 +1,13 @@
 ﻿using System;
-
+using System.Xml.Serialization;
+ 
 namespace BE
 {
     public class Tester
     {
         public int ID { get; set; }
 
+        [XmlIgnore]
         public string FullName { get => $"{FirstName} {LastName}"; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
@@ -20,7 +22,10 @@ namespace BE
         public int WeeklyTests { get; set; }
         public int MaxDistanceInKilometers { get; set; }
 
+        [XmlIgnore]
         public bool[,] WorkingSchedule { get; set; }
+
+        [XmlIgnore]
         public bool[,] AvailableSchedule { get; set; }
 
 
@@ -48,6 +53,7 @@ namespace BE
         {
             return AvailableSchedule[(int)date.DayOfWeek, date.Hour] == true;
         }
+
         public override string ToString()
         {
             return $"Seniority: {Seniority}{Environment.NewLine}Car Specializtion: {CarSpecializtion}{Environment.NewLine}Max Number of Tests in Week: {MaxWeeklyTests}{Environment.NewLine}Max Distance from Trainee Address: {MaxDistanceInKilometers}(km){Environment.NewLine}";

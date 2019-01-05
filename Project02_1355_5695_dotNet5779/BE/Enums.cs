@@ -23,8 +23,4 @@
         Distance, Reverse, Mirrors, Signals
     }
 
-    public enum TzStatus
-    {
-        R_NOT_VALID = -2, R_ELEGAL_INPUT = -1, R_VALID = 1
-    };
 }

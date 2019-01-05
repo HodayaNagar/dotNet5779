@@ -12,13 +12,14 @@ namespace BL
 
         protected FactorySingletonBL() { }
 
-        public static IBL getInstance()
+        //public static IBL getInstance()
+        public static IBL Current
         {
-            if (instance == null)
+            get
             {
-                instance = new BL_imp();
+                if (instance == null) instance = new BL_imp();
+                return instance;
             }
-            return instance;
         }
     }
 }

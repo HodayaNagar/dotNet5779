@@ -12,13 +12,14 @@ namespace DAL
 
         protected FactorySingletonDal() { }
 
-        public static IDAL getInstance()
+        //public static IDAL getInstance()
+        public static IDAL Current
         {
-            if (instance == null)
+            get
             {
-                instance = new Dal_XML_imp();
+                if (instance == null) instance = new Dal_imp();
+                return instance;
             }
-            return instance;
         }
     }
 }
