@@ -1,4 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Testers>
-
-</Testers>
+&lt;Tester&gt;
+  &lt;ID&gt;207915695&lt;/ID&gt;
+  &lt;FirstName&gt;Tester 0&lt;/FirstName&gt;
+  &lt;LastName&gt;ID 0&lt;/LastName&gt;
+  &lt;BirthDate&gt;1978-12-12T00:00:00&lt;/BirthDate&gt;
+  &lt;Gender&gt;Male&lt;/Gender&gt;
+  &lt;Address&gt;
+    &lt;City&gt;jerusalem&lt;/City&gt;
+    &lt;StreetName&gt;Jaffa&lt;/StreetName&gt;
+    &lt;BuildingNumber&gt;12&lt;/BuildingNumber&gt;
+  &lt;/Address&gt;
+  &lt;Seniority&gt;15&lt;/Seniority&gt;
+  &lt;CarSpecializtion&gt;Private&lt;/CarSpecializtion&gt;
+  &lt;MaxWeeklyTests&gt;2&lt;/MaxWeeklyTests&gt;
+  &lt;WeeklyTests&gt;0&lt;/WeeklyTests&gt;
+  &lt;MaxDistanceInKilometers&gt;5&lt;/MaxDistanceInKilometers&gt;
+&lt;/Tester&gt;
+&lt;Tester&gt;
+  &lt;ID&gt;207109190&lt;/ID&gt;
+  &lt;FirstName&gt;Tester 1&lt;/FirstName&gt;
+  &lt;LastName&gt;ID 1&lt;/LastName&gt;
+  &lt;BirthDate&gt;1978-12-12T00:00:00&lt;/BirthDate&gt;
+  &lt;Gender&gt;Male&lt;/Gender&gt;
+  &lt;Address&gt;
+    &lt;City&gt;jerusalem&lt;/City&gt;
+    &lt;StreetName&gt;Jaffa&lt;/StreetName&gt;
+    &lt;BuildingNumber&gt;12&lt;/BuildingNumber&gt;
+  &lt;/Address&gt;
+  &lt;Seniority&gt;14&lt;/Seniority&gt;
+  &lt;CarSpecializtion&gt;Private&lt;/CarSpecializtion&gt;
+  &lt;MaxWeeklyTests&gt;2&lt;/MaxWeeklyTests&gt;
+  &lt;WeeklyTests&gt;0&lt;/WeeklyTests&gt;
+  &lt;MaxDistanceInKilometers&gt;5&lt;/MaxDistanceInKilometers&gt;
+&lt;/Tester&gt;</Testers>
