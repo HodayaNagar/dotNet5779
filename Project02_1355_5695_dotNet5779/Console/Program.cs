@@ -17,7 +17,7 @@ namespace Console
             {
                 int[] tz = { 207915695, 207109190, 218572279, 217449495, 329140081, 330930165, 213203649, 325180693, 54379912, 200713501, 201558137, 308405356, 205631823, 203385547, 305011447 };
 
-                var provider = new BL.BL_imp();
+               // var provider = new BL.BL_imp();
                 //double distance = provider.Distance(address1: addrs1, address2: addrs2);
                 //System.Console.WriteLine(distance.ToString("N4"));
 

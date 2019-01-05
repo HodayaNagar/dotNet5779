@@ -17,22 +17,29 @@ namespace DAL
 {
     public class Dal_XML_imp : IDAL
     {
-        //private string XmlDbPath = @"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\";
         private string XmlDbPath = @"C:\Users\HP-PC\source\repos\dotNet5779\Project02_1355_5695_dotNet5779\DbFiles2\";
 
+        private string TestFileName = "Tests.xml";
         private string TesterFileName = "Testers.xml";
+        private string TraineeFileName = "Trainees.xml";
 
+
+        public string TestFile { get => $"{XmlDbPath}{TestFileName}"; }
         public string TesterFile { get => $"{XmlDbPath}{TesterFileName}"; }
+        public string TraineeFile { get => $"{XmlDbPath}{TraineeFileName}"; }
+
 
         public void AddTest(Test test, int testerID, int traineeID)
         {
-            XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Tests.xml");
+            XElement xEle = XElement.Load(TestFile);
             if (xEle != null)
             {
                 string testDetails = test.ToXml();
                 xEle.Add(testDetails);
                 xEle.Save(testDetails);
             }
+            else throw new Exception("File not exsist");
+
         }
 
         public void AddTester(Tester tester)
@@ -50,17 +57,21 @@ namespace DAL
                 xEle.Add(testerDetails);
                 xEle.Save(testerDetails);
             }
+            else   throw new Exception("File not exsist");
+
         }
 
         public void AddTrainee(Trainee trainee)
         {
-            XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Trainees.xml");
+            XElement xEle = XElement.Load(TraineeFile);
             if (xEle != null)
             {
                 string traineeDetails = trainee.ToXml();
                 xEle.Add(traineeDetails);
                 xEle.Save(traineeDetails);
             }
+            else throw new Exception("File not exsist");
+
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
@@ -80,7 +91,7 @@ namespace DAL
 
         public Test GetTest(long testID)
         {
-            XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Tests.xml");
+            XElement xEle = XElement.Load(TestFile);
             var stCnt = from address in xEle.Elements("Test")
                             //    where (string)testID.Element("ID") == testID
                         select address;
@@ -89,7 +100,7 @@ namespace DAL
 
         public Tester GetTester(int testerID)
         {
-            XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Testers.xml");
+            XElement xEle = XElement.Load(TesterFile);
 
             throw new NotImplementedException();
         }
@@ -113,13 +124,15 @@ namespace DAL
         {
             try
             {
-                XElement xEle = XElement.Load(@"C:\\Users\\Owner\\source\\repos\\dotNet57792\\Project02_1355_5695_dotNet5779\\DbFiles2\\Trainees.xml");
+                XElement xEle = XElement.Load(TraineeFile);
                 if (xEle != null)
                 {
                     var addr = xEle.Elements("Trainee").ToList();
                     foreach (XElement addEle in addr)
                         addEle.SetElementValue("ID", traineeID);
                 }
+                else throw new Exception("File not exsist");
+
             }
             catch
             {
