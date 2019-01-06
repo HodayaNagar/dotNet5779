@@ -12,7 +12,7 @@ namespace DAL
     public static class Extensions
     {
 
-        public static T Deserialize<T>(string input) where T : class
+        public static T ToObject<T>(string input) where T : class
         {
             System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(T));
 

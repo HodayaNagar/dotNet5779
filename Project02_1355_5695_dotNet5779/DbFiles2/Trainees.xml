@@ -1,38 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Trainees>
-&lt;Trainee&gt;
-  &lt;ID&gt;207915695&lt;/ID&gt;
-  &lt;FirstName&gt;Trainee0&lt;/FirstName&gt;
-  &lt;LastName&gt;ID207109190&lt;/LastName&gt;
-  &lt;BirthDate&gt;2000-12-12T00:00:00&lt;/BirthDate&gt;
-  &lt;Gender&gt;Male&lt;/Gender&gt;
-  &lt;Address&gt;
-    &lt;City&gt;Tel Aviv&lt;/City&gt;
-    &lt;StreetName&gt;Hagana&lt;/StreetName&gt;
-    &lt;BuildingNumber&gt;57&lt;/BuildingNumber&gt;
-  &lt;/Address&gt;
-  &lt;CarTrained&gt;Private&lt;/CarTrained&gt;
-  &lt;GearType&gt;Automatic&lt;/GearType&gt;
-  &lt;DrivingSchool&gt;smartdrive&lt;/DrivingSchool&gt;
-  &lt;TotalLessonsNumber&gt;28&lt;/TotalLessonsNumber&gt;
-  &lt;DrivingInstructorFirstName&gt;Instructor 207109190&lt;/DrivingInstructorFirstName&gt;
-  &lt;DrivingInstructorLastName&gt;of trainee ID:0&lt;/DrivingInstructorLastName&gt;
-&lt;/Trainee&gt;
-&lt;Trainee&gt;
-  &lt;ID&gt;207109190&lt;/ID&gt;
-  &lt;FirstName&gt;Trainee1&lt;/FirstName&gt;
-  &lt;LastName&gt;ID218572279&lt;/LastName&gt;
-  &lt;BirthDate&gt;2000-12-12T00:00:00&lt;/BirthDate&gt;
-  &lt;Gender&gt;Male&lt;/Gender&gt;
-  &lt;Address&gt;
-    &lt;City&gt;Tel Aviv&lt;/City&gt;
-    &lt;StreetName&gt;Hagana&lt;/StreetName&gt;
-    &lt;BuildingNumber&gt;56&lt;/BuildingNumber&gt;
-  &lt;/Address&gt;
-  &lt;CarTrained&gt;Private&lt;/CarTrained&gt;
-  &lt;GearType&gt;Automatic&lt;/GearType&gt;
-  &lt;DrivingSchool&gt;smartdrive&lt;/DrivingSchool&gt;
-  &lt;TotalLessonsNumber&gt;28&lt;/TotalLessonsNumber&gt;
-  &lt;DrivingInstructorFirstName&gt;Instructor 218572279&lt;/DrivingInstructorFirstName&gt;
-  &lt;DrivingInstructorLastName&gt;of trainee ID:1&lt;/DrivingInstructorLastName&gt;
-&lt;/Trainee&gt;</Trainees>
+<Trainee>
+  <ID>207915695</ID>
+  <FirstName>Trainee0</FirstName>
+  <LastName>ID207915695</LastName>
+  <BirthDate>2000-12-12T00:00:00</BirthDate>
+  <Gender>Male</Gender>
+  <Address>
+    <City>Tel Aviv</City>
+    <StreetName>Hagana</StreetName>
+    <BuildingNumber>57</BuildingNumber>
+  </Address>
+  <CarTrained>Private</CarTrained>
+  <GearType>Automatic</GearType>
+  <DrivingSchool>smartdrive</DrivingSchool>
+  <TotalLessonsNumber>28</TotalLessonsNumber>
+  <DrivingInstructorFirstName>Instructor 207109190</DrivingInstructorFirstName>
+  <DrivingInstructorLastName>of trainee ID:0</DrivingInstructorLastName>
+</Trainee>
+<Trainee>
+  <ID>207109190</ID>
+  <FirstName>Trainee1</FirstName>
+  <LastName>ID207109190</LastName>
+  <BirthDate>2000-12-12T00:00:00</BirthDate>
+  <Gender>Male</Gender>
+  <Address>
+    <City>Tel Aviv</City>
+    <StreetName>Hagana</StreetName>
+    <BuildingNumber>56</BuildingNumber>
+  </Address>
+  <CarTrained>Private</CarTrained>
+  <GearType>Automatic</GearType>
+  <DrivingSchool>smartdrive</DrivingSchool>
+  <TotalLessonsNumber>30</TotalLessonsNumber>
+  <DrivingInstructorFirstName>Instructor 218572279</DrivingInstructorFirstName>
+  <DrivingInstructorLastName>of trainee ID:1</DrivingInstructorLastName>
+</Trainee>
+</Trainees>

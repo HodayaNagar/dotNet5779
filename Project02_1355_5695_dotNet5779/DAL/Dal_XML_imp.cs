@@ -7,19 +7,62 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using BE;
 
 namespace DAL
 {
     public class Dal_XML_imp : IDAL
     {
+
+        private static List<Tester> testersList;
+        private static List<Trainee> traineesList;
+        private static List<Test> testsList;
+
+        public Dal_XML_imp()
+        {
+            testersList = new List<Tester>();
+            // testersList = (List<Tester>)loadListFromXML(TesterFile);
+
+            traineesList = new List<Trainee>();
+            // traineesList = (List<Trainee>)loadListFromXML(TraineeFile);
+
+            testsList = new List<Test>();
+            // testsList = (List<Test>)loadListFromXML(TestFile);
+
+        }
+
+
+        public static void saveListToXML(List<Object> list, string path)
+        {
+            //XmlSerializer x = new XmlSerializer(list.GetType());
+            //FileStream fs = new FileStream(path, FileMode.Create);
+            //x.Serialize(fs, list);
+        }
+
+        public static List<Object> loadListFromXML(string path)
+        {
+
+            List<Object> list = new List<Object>();
+            XElement xEle = XElement.Load(path);
+            foreach (var item in xEle.Elements())
+            {
+                list.Add(item);
+            }
+            return list;
+        }
+
+
+
+
+
         private string XmlDbPath = @"C:\Users\Owner\source\repos\dotNet57792\Project02_1355_5695_dotNet5779\DbFiles2\";
-
-
         //private string XmlDbPath = @"C:\Users\HP-PC\source\repos\dotNet5779\Project02_1355_5695_dotNet5779\DbFiles2\";
 
         private string TestFileName = "Tests.xml";
@@ -67,6 +110,13 @@ namespace DAL
 
         public void AddTester(Tester tester)
         {
+
+            //foreach (var item in loadListFromXML(TesterFile))
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+
             Tester t = GetTester(tester.ID);
             if (t != null)
             {
