@@ -1,4 +1,4 @@
-﻿/********************************************************************/
+/********************************************************************/
 /*
  * Using XML database shows that the developer has no clue what a database supposedly is to do. 
  * A file is not a database by any means, unless there is a lot of support there (in the company...). 
@@ -21,53 +21,146 @@ namespace DAL
     public class Dal_XML_imp : IDAL
     {
 
-        private static List<Tester> testersList;
-        private static List<Trainee> traineesList;
-        private static List<Test> testsList;
+        private List<Tester> testersList;
+        private List<Trainee> traineesList;
+        private List<Test> testsList;
 
-        public Dal_XML_imp()
+        public List<Tester> Testers
         {
-            testersList = loadListFromXMLTester(TesterFile);
-            traineesList = loadListFromXMLTrainee(TraineeFile);
-            testsList = loadListFromXMLTest(TestFile);
+            get
+            {
+                if (testersList == null)
+                    testersList = loadListFromXMLTester(TesterFile);
+
+                return testersList;
+            }
+
+            set
+            {
+                if (testersList != null)
+                  saveListToXMLTester(testersList, TesterFile);
+            }
+        }
+        public List<Trainee> Trainees
+        {
+            get
+            {
+                if (traineesList == null)
+                    traineesList = loadListFromXMLTrainee(TraineeFile);
+
+                return traineesList;
+            }
+            set
+            {
+                if (traineesList != null)
+                    saveListToXMLTrainee(traineesList, TraineeFile);
+            }
+        }
+        public List<Test> Tests
+        {
+            get
+            {
+                if (testsList == null)
+                    testsList = loadListFromXMLTest(TestFile);
+
+                return testsList;
+            }
+            set
+            {
+                if (testsList != null)
+                    saveListToXMLTest(testsList, TestFile);
+            }
         }
 
-
-        //public static void saveListToXML(List<Object> list, string path)
+        //public Dal_XML_imp()
         //{
-      
+        //    testersList = loadListFromXMLTester(TesterFile);
+        //    traineesList = loadListFromXMLTrainee(TraineeFile);
+        //    testsList = loadListFromXMLTest(TestFile);
         //}
-
         public static List<Tester> loadListFromXMLTester(string path)
         {
             List<Tester> list = new List<Tester>();
             XElement xEle = XElement.Load(path);
-            foreach (var item in xEle.Elements())
-            {
-                //list.Add(item);
-            }
-            return list;
+            var gg = xEle.Elements().ToArray();
+            var tt = gg.Select(x => x.ToString().ToObject<Tester>()).ToList();
+            return tt;
         }
         public static List<Trainee> loadListFromXMLTrainee(string path)
         {
             List<Trainee> list = new List<Trainee>();
             XElement xEle = XElement.Load(path);
-            foreach (var item in xEle.Elements())
-            {
-               // list.Add(item);
-            }
-            return list;
+            var gg = xEle.Elements().ToArray();
+            var tt = gg.Select(x => x.ToString().ToObject<Trainee>()).ToList();
+            return tt;
         }
         public static List<Test> loadListFromXMLTest(string path)
         {
             List<Test> list = new List<Test>();
             XElement xEle = XElement.Load(path);
-            foreach (var item in xEle.Elements())
-            {
-               // list.Add(item);
-            }
-            return list;
+            var gg = xEle.Elements().ToArray();
+            var tt = gg.Select(x => x.ToString().ToObject<Test>()).ToList();
+            return tt;
         }
+
+
+
+
+        public static void saveListToXMLTester(List<Tester> list, string path)
+        {
+            foreach (var item in list)
+            {
+                string testerDetail = item.ToXml().Remove(0, 40);
+                //<?xml version="1.0" encoding="utf-8"?>
+                Console.WriteLine(testerDetail);
+                XElement xEle = XElement.Load(path);
+                xEle.Add(testerDetail);
+                xEle.Save(path);
+            }
+        }
+        public static void saveListToXMLTrainee(List<Trainee> list, string path)
+        {
+            foreach (var item in list)
+            {
+                string traineeDetail = item.ToXml().Remove(0, 40);
+                //<?xml version="1.0" encoding="utf-8"?>
+                Console.WriteLine(traineeDetail);
+                XElement xEle = XElement.Load(path);
+                xEle.Add(traineeDetail);
+                xEle.Save(path);
+            }
+        }
+        public static void saveListToXMLTest(List<Test> list, string path)
+        {
+            foreach (var item in list)
+            {
+                string testDetail = item.ToXml().Remove(0, 40);
+                //<?xml version="1.0" encoding="utf-8"?>
+                Console.WriteLine(testDetail);
+                XElement xEle = XElement.Load(path);
+                xEle.Add(testDetail);
+                xEle.Save(path);
+            }
+        }
+
+
+
+        //public static dynamic loadListFromXML(string path)
+        //{
+        //    //XDocument xmlDoc = XDocument.Load(path);
+        //    //var list = xmlDoc.Root.Elements()
+        //    //                           .Select(element => element.Value)
+        //    //                           .ToList();
+        //    //return list;
+
+        //    List<Object> list = new List<Object>();
+        //    XElement xEle = XElement.Load(path);
+        //    foreach (var item in xEle.Elements())
+        //    {
+        //        //list.Add(item.ToString().ToObject());
+        //    }
+        //    return list;
+        //}
 
 
 
@@ -85,6 +178,124 @@ namespace DAL
         public string TesterFile { get => $"{XmlDbPath}{TesterFileName}"; }
         public string TraineeFile { get => $"{XmlDbPath}{TraineeFileName}"; }
 
+
+        //public void AddTest(Test test, int testerID, int traineeID)
+        //{
+
+        //    XElement xEle = XElement.Load(TestFile);
+        //    if (xEle != null)
+        //    {
+        //        string testDetail = test.ToXml();
+        //        //<?xml version="1.0" encoding="utf-16"?>
+        //        testDetail = testDetail.Remove(0, 40);
+        //        Console.WriteLine(testDetail);
+        //        xEle.Add(testDetail);
+        //        xEle.Save(TestFile);
+        //    }
+        //    else throw new Exception("File not exsist");
+
+        //}
+
+
+        #region Tester Functions
+        public void AddTester(Tester tester)
+        {
+
+            Tester t = GetTester(tester.ID);
+            if (t != null)
+            {
+                throw new Exception("Tester with the same id already exists");
+            }
+            testersList.Add(tester);
+        }
+
+        public bool RemoveTester(int testerID)
+        {
+            Tester t = GetTester(testerID);
+            if (t == null)
+            {
+                throw new Exception("Tester with the same id not found");
+            }
+            // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
+            testsList.RemoveAll(tl => tl.TesterID == testerID);
+            return testersList.Remove(t);
+        }
+
+        public void UpdateTester(Tester tester)
+        {
+            int index = testersList.FindIndex(tl => tl.ID == tester.ID);
+            if (index == -1)
+            {
+                throw new Exception("Tester with the same id not found");
+            }
+            testersList[index] = tester;
+        }
+
+        public Tester GetTester(int testerID)
+        {
+            return testersList.FirstOrDefault(tl => tl.ID == testerID);
+        }
+
+        public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
+        {
+            if (predicate == null)
+            {
+                return testersList.AsEnumerable();
+            }
+            return testersList.Where(predicate);
+        }
+        #endregion
+
+        #region Trainee Functions
+        public void AddTrainee(Trainee trainee)
+        {
+            Trainee t = GetTrainee(trainee.ID);
+            if (t != null)
+            {
+                throw new Exception("Trainee with the same id already exists");
+            }
+            traineesList.Add(trainee);
+        }
+
+        public bool RemoveTrainee(int traineeID)
+        {
+            Trainee t = GetTrainee(traineeID);
+            if (t == null)
+            {
+                throw new Exception("Trainee with the same id not found");
+            }
+            // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
+            testsList.RemoveAll(tl => tl.TraineeID == traineeID);
+            return traineesList.Remove(t);
+        }
+
+        public void UpdateTrainee(Trainee trainee)
+        {
+            int index = traineesList.FindIndex(tl => tl.ID == trainee.ID);
+            if (index == -1)
+            {
+                throw new Exception("Trainee with the same id not found");
+            }
+            traineesList[index] = trainee;
+        }
+
+        public Trainee GetTrainee(int traineeID)
+        {
+            return traineesList.FirstOrDefault(tl => tl.ID == traineeID);
+        }
+
+        public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
+        {
+            if (predicate == null)
+            {
+                return traineesList.AsEnumerable();
+            }
+            return traineesList.Where(predicate);
+        }
+
+        #endregion
+
+        #region Test Functions
 
         public void AddTest(Test test, int testerID, int traineeID)
         {
@@ -104,191 +315,59 @@ namespace DAL
             {
                 throw new Exception("Trainee with the same id not found");
             }
+            test.TestID = Configuration.RunningTestID++;
+            test.TesterID = testerID;
+            test.TraineeID = traineeID;
+            t2.AvailableSchedule[(int)test.TestDate.DayOfWeek, test.TestDate.Hour] = false;
 
-            XElement xEle = XElement.Load(TestFile);
-            if (xEle != null)
-            {
-                string testDetail = test.ToXml();
-                //<?xml version="1.0" encoding="utf-16"?>
-                testDetail = testDetail.Remove(0, 40);
-                Console.WriteLine(testDetail);
-                xEle.Add(testDetail);
-                xEle.Save(TestFile);
-            }
-            else throw new Exception("File not exsist");
-
-        }
-
-        public void AddTester(Tester tester)
-        {
-
-            //foreach (var item in testersList)
-            //{
-            //    Console.WriteLine(item);
-            //}
-
-
-            Tester t = GetTester(tester.ID);
-            if (t != null)
-            {
-                throw new Exception("Tester with the same id already exists");
-            }
-
-            XElement xEle = XElement.Load(TesterFile);
-            if (xEle != null)
-            {
-                string testerDetails = tester.ToXml();
-                //<?xml version="1.0" encoding="utf-16"?>
-                testerDetails = testerDetails.Remove(0, 40);
-                Console.WriteLine(testerDetails);
-                xEle.Add(testerDetails);
-                xEle.Save(TesterFile);
-
-            }
-            else throw new Exception("File not exsist");
-
-        }
-
-        public void AddTrainee(Trainee trainee)
-        {
-            Trainee t = GetTrainee(trainee.ID);
-            if (t != null)
-            {
-                throw new Exception("Trainee with the same id already exists");
-            }
-
-            XElement xEle = XElement.Load(TraineeFile);
-            if (xEle != null)
-            {
-                string traineeDetail = trainee.ToXml();
-                //<?xml version="1.0" encoding="utf-16"?>
-                traineeDetail = traineeDetail.Remove(0, 40);
-                Console.WriteLine(traineeDetail);
-                xEle.Add(traineeDetail);
-                xEle.Save(TraineeFile);
-            }
-            else throw new Exception("File not exsist");
-        }
-
-        public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
-        {
-            XElement xEle = XElement.Load(TesterFile);
-            if (xEle != null)
-            {
-                IEnumerable<XElement> getAllTesters = xEle.Elements();
-                // return getAllTesters;
-                throw new Exception("File not exsist");
-            }
-            else throw new Exception("File not exsist");
-        }
-
-        public IEnumerable<Test> GetAllTests(Func<Test, bool> predicate = null)
-        {
-            XElement xEle = XElement.Load(TestFile);
-            if (xEle != null)
-            {
-                IEnumerable<XElement> getAllTests = xEle.Elements();
-                // return getAllTests;
-                throw new Exception("File not exsist");
-            }
-            else throw new Exception("File not exsist");
-        }
-
-        public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
-        {
-            XElement xEle = XElement.Load(TraineeFile);
-            if (xEle != null)
-            {
-                IEnumerable<XElement> getAllTrainees = xEle.Elements();
-                // return getAllTrainees;
-                throw new Exception("File not exsist");
-            }
-            else throw new Exception("File not exsist");
-        }
-
-        public Test GetTest(long testID)
-        {
-            XElement xEle = XElement.Load(TestFile);
-            var getTest = from address in xEle.Elements("Test")
-                          where (string)address.Element("ID") == $"{testID}"
-                          select address;
-            if (getTest.Count() != 1)
-                throw new Exception("Test not exsist");
-
-            // return getTest;
-            throw new NotImplementedException();
-        }
-
-        public Tester GetTester(int testerID)
-        {
-            XElement xEle = XElement.Load(TesterFile);
-            var getTester = from address in xEle.Elements("Tester")
-                            where (string)address.Element("ID") == $"{testerID}"
-                            select address;
-            if (getTester.Count() != 1)
-                throw new Exception("Tester not exsist");
-
-            // return getTester;
-            throw new NotImplementedException();
-        }
-
-        public Trainee GetTrainee(int traineeID)
-        {
-            XElement xEle = XElement.Load(TraineeFile);
-            var getTrainee = from address in xEle.Elements("Trainee")
-                             where (string)address.Element("ID") == $"{traineeID}"
-                             select address;
-            if (getTrainee.Count() != 1)
-                throw new Exception("Trainee not exsist");
-
-            // return getTrainee;
-            throw new NotImplementedException();
+            testsList.Add(test);
         }
 
         public bool RemoveTest(long testID)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveTester(int testerID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveTrainee(int traineeID)
-        {
-            try
+            Test t = GetTest(testID);
+            if (t == null)
+                throw new Exception("Test was not found");
+            // צריך לבדוק אם יש בוחן או נבחן שרשומים למבחן
+            Tester t2 = GetTester(t.TesterID);
+            if (t2 != null)
             {
-                XElement xEle = XElement.Load(TraineeFile);
-                if (xEle != null)
-                {
-                    var addr = xEle.Elements("Trainee").ToList();
-                    foreach (XElement addEle in addr)
-                        addEle.SetElementValue("ID", traineeID);
-                }
-                else throw new Exception("File not exsist");
-
+                throw new Exception("Tester with the same is registered to this test");
             }
-            catch
+            Trainee t3 = GetTrainee(t.TraineeID);
+            if (t3 != null)
             {
-                throw new NotImplementedException();
+                throw new Exception("Trainee with the same id is registered to this test");
             }
-            return true;
+
+            return testsList.Remove(t);
         }
 
         public void UpdateTest(Test test)
         {
-            throw new NotImplementedException();
+            int index = testsList.FindIndex(tl => tl.TestID == test.TestID);
+            if (index == -1)
+                throw new Exception("Test doesn't exist");
+
+            testsList[index] = test;
         }
 
-        public void UpdateTester(Tester tester)
+        public Test GetTest(long testID)
         {
-            throw new NotImplementedException();
+            return testsList.FirstOrDefault(tl => tl.TestID == testID);
         }
 
-        public void UpdateTrainee(Trainee trainee)
+        public IEnumerable<Test> GetAllTests(Func<Test, bool> predicate = null)
         {
-            throw new NotImplementedException();
+            if (predicate == null)
+            {
+                return testsList.AsEnumerable();
+            }
+            return testsList.Where(predicate);
         }
+
+        #endregion
+
+
     }
 }
