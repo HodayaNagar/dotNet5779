@@ -27,38 +27,50 @@ namespace DAL
 
         public Dal_XML_imp()
         {
-            testersList = loadListFromXML(TesterFile);
-            traineesList = loadListFromXML(TraineeFile);
-            testsList = loadListFromXML(TestFile);
+            testersList = loadListFromXMLTester(TesterFile);
+            traineesList = loadListFromXMLTrainee(TraineeFile);
+            testsList = loadListFromXMLTest(TestFile);
         }
 
 
-        public static void saveListToXML(List<Object> list, string path)
-        {
-            //XmlSerializer x = new XmlSerializer(list.GetType());
-            //FileStream fs = new FileStream(path, FileMode.Create);
-            //x.Serialize(fs, list);
-        }
+        //public static void saveListToXML(List<Object> list, string path)
+        //{
+      
+        //}
 
-        public static dynamic loadListFromXML(string path)
+        public static List<Tester> loadListFromXMLTester(string path)
         {
-            //XDocument xmlDoc = XDocument.Load(path);
-            //var list = xmlDoc.Root.Elements()
-            //                           .Select(element => element.Value)
-            //                           .ToList();
-            //return list;
-
-            List<Object> list = new List<Object>();
+            List<Tester> list = new List<Tester>();
             XElement xEle = XElement.Load(path);
             foreach (var item in xEle.Elements())
             {
-                list.Add(item);
+                //list.Add(item);
+            }
+            return list;
+        }
+        public static List<Trainee> loadListFromXMLTrainee(string path)
+        {
+            List<Trainee> list = new List<Trainee>();
+            XElement xEle = XElement.Load(path);
+            foreach (var item in xEle.Elements())
+            {
+               // list.Add(item);
+            }
+            return list;
+        }
+        public static List<Test> loadListFromXMLTest(string path)
+        {
+            List<Test> list = new List<Test>();
+            XElement xEle = XElement.Load(path);
+            foreach (var item in xEle.Elements())
+            {
+               // list.Add(item);
             }
             return list;
         }
 
 
-        
+
 
 
         private string XmlDbPath = @"C:\Users\Owner\source\repos\dotNet57792\Project02_1355_5695_dotNet5779\DbFiles2\";
@@ -110,10 +122,10 @@ namespace DAL
         public void AddTester(Tester tester)
         {
 
-            foreach (var item in testersList)
-            {
-                Console.WriteLine(item);
-            }
+            //foreach (var item in testersList)
+            //{
+            //    Console.WriteLine(item);
+            //}
 
 
             Tester t = GetTester(tester.ID);

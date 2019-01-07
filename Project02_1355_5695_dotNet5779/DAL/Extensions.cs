@@ -47,6 +47,14 @@ namespace DAL
             }
         }
 
+
+        public static string GetXMLAsString(XmlElement myxml)
+        {
+            StringWriter sw = new StringWriter();
+            XmlTextWriter tx = new XmlTextWriter(sw);
+            string str = sw.ToString();// 
+            return str;
+        }
         /*
         public static string Serialize<T>(this T value)
         {
