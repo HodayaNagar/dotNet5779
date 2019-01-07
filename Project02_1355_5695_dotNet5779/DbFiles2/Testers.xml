@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Testers>
 <Tester>
-  <ID>217449495</ID>
+  <ID>12345674</ID>
   <FirstName>Tester0</FirstName>
-  <LastName>ID217449495</LastName>
+  <LastName>Tester0</LastName>
   <BirthDate>2000-12-12T00:00:00</BirthDate>
   <Gender>Male</Gender>
   <Address>
@@ -18,9 +18,9 @@
   <MaxDistanceInKilometers>20</MaxDistanceInKilometers>
 </Tester>
 <Tester>
-  <ID>218572279</ID>
+  <ID>12345677</ID>
   <FirstName>Tester1</FirstName>
-  <LastName>ID218572279</LastName>
+  <LastName>Tester1</LastName>
   <BirthDate>2000-12-12T00:00:00</BirthDate>
   <Gender>Femaleale</Gender>
   <Address>
