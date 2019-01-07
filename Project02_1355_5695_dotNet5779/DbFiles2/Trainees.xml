@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Trainees>
 <Trainee>
-  <ID>207915695</ID>
+  <ID>12345674</ID>
   <FirstName>Trainee0</FirstName>
-  <LastName>ID207915695</LastName>
+  <LastName>Trainee0</LastName>
   <BirthDate>2000-12-12T00:00:00</BirthDate>
   <Gender>Male</Gender>
   <Address>
@@ -15,13 +15,13 @@
   <GearType>Automatic</GearType>
   <DrivingSchool>smartdrive</DrivingSchool>
   <TotalLessonsNumber>28</TotalLessonsNumber>
-  <DrivingInstructorFirstName>Instructor 207109190</DrivingInstructorFirstName>
+  <DrivingInstructorFirstName>Instructor0</DrivingInstructorFirstName>
   <DrivingInstructorLastName>of trainee ID:0</DrivingInstructorLastName>
 </Trainee>
 <Trainee>
-  <ID>207109190</ID>
+  <ID>12345671</ID>
   <FirstName>Trainee1</FirstName>
-  <LastName>ID207109190</LastName>
+  <LastName>Trainee1</LastName>
   <BirthDate>2000-12-12T00:00:00</BirthDate>
   <Gender>Male</Gender>
   <Address>
@@ -33,7 +33,7 @@
   <GearType>Automatic</GearType>
   <DrivingSchool>smartdrive</DrivingSchool>
   <TotalLessonsNumber>30</TotalLessonsNumber>
-  <DrivingInstructorFirstName>Instructor 218572279</DrivingInstructorFirstName>
+  <DrivingInstructorFirstName>Instructor1</DrivingInstructorFirstName>
   <DrivingInstructorLastName>of trainee ID:1</DrivingInstructorLastName>
 </Trainee>
 </Trainees>
