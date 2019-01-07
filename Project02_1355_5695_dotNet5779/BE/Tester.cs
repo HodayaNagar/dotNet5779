@@ -21,7 +21,35 @@ namespace BE
         public int MaxWeeklyTests { get; set; }
         public int WeeklyTests { get; set; }
         public int MaxDistanceInKilometers { get; set; }
-
+        private string workingScheduleStr;
+        public string WorkingScheduleStr
+        {
+            get
+               {
+                workingScheduleStr = "";
+                for (int i = 0; i < Configuration.WorkingDaysInWeek; i++)
+                {
+                    for (int j = 0; j < Configuration.WorkingHoursInDay; j++)
+                    {
+                        workingScheduleStr += (WorkingSchedule[i, j] == true) ? $"1" : $"0";
+                    }
+                    workingScheduleStr += $",";
+                }
+                return workingScheduleStr;
+            }
+            set
+            {
+                int k = 0;
+                for (int i = 0; i < Configuration.WorkingDaysInWeek; i++)
+                    for (int j = 0; j < Configuration.WorkingHoursInDay; j++)
+                    {
+                        if (workingScheduleStr[k++] == '1')
+                            WorkingSchedule[i, j] = true;
+                        if (workingScheduleStr[k++] == '0')
+                            WorkingSchedule[i, j] = false;
+                    }
+            }
+        }
         [XmlIgnore]
         public bool[,] WorkingSchedule { get; set; }
 

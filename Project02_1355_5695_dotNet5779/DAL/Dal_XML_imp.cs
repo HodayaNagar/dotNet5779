@@ -27,15 +27,9 @@ namespace DAL
 
         public Dal_XML_imp()
         {
-            testersList = new List<Tester>();
-            // testersList = (List<Tester>)loadListFromXML(TesterFile);
-
-            traineesList = new List<Trainee>();
-            // traineesList = (List<Trainee>)loadListFromXML(TraineeFile);
-
-            testsList = new List<Test>();
-            // testsList = (List<Test>)loadListFromXML(TestFile);
-
+            testersList = loadListFromXML(TesterFile);
+            traineesList = loadListFromXML(TraineeFile);
+            testsList = loadListFromXML(TestFile);
         }
 
 
@@ -46,8 +40,13 @@ namespace DAL
             //x.Serialize(fs, list);
         }
 
-        public static List<Object> loadListFromXML(string path)
+        public static dynamic loadListFromXML(string path)
         {
+            //XDocument xmlDoc = XDocument.Load(path);
+            //var list = xmlDoc.Root.Elements()
+            //                           .Select(element => element.Value)
+            //                           .ToList();
+            //return list;
 
             List<Object> list = new List<Object>();
             XElement xEle = XElement.Load(path);
@@ -59,7 +58,7 @@ namespace DAL
         }
 
 
-
+        
 
 
         private string XmlDbPath = @"C:\Users\Owner\source\repos\dotNet57792\Project02_1355_5695_dotNet5779\DbFiles2\";
@@ -111,10 +110,10 @@ namespace DAL
         public void AddTester(Tester tester)
         {
 
-            //foreach (var item in loadListFromXML(TesterFile))
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in testersList)
+            {
+                Console.WriteLine(item);
+            }
 
 
             Tester t = GetTester(tester.ID);
