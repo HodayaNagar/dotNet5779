@@ -104,7 +104,18 @@ namespace DAL
         }
 
 
-
+        public static void saveListToXML(List<Object> list, string path)
+        {
+            foreach (var item in list)
+            {
+                string detail = item.ToXml().Remove(0, 40);
+                //<?xml version="1.0" encoding="utf-8"?>
+                Console.WriteLine(detail);
+                XElement xEle = XElement.Load(path);
+                xEle.Add(detail);
+                xEle.Save(path);
+            }
+        }
 
         public static void saveListToXMLTester(List<Tester> list, string path)
         {
@@ -145,28 +156,9 @@ namespace DAL
 
 
 
-        //public static dynamic loadListFromXML(string path)
-        //{
-        //    //XDocument xmlDoc = XDocument.Load(path);
-        //    //var list = xmlDoc.Root.Elements()
-        //    //                           .Select(element => element.Value)
-        //    //                           .ToList();
-        //    //return list;
-
-        //    List<Object> list = new List<Object>();
-        //    XElement xEle = XElement.Load(path);
-        //    foreach (var item in xEle.Elements())
-        //    {
-        //        //list.Add(item.ToString().ToObject());
-        //    }
-        //    return list;
-        //}
 
 
-
-
-
-        private string XmlDbPath = @"C:\Users\Owner\source\repos\dotNet57792\Project02_1355_5695_dotNet5779\DbFiles2\";
+        private string XmlDbPath = @"C:\Users\Owner\source\repos\dotNet5779\Project02_1355_5695_dotNet5779\DbFiles2\";
         //private string XmlDbPath = @"C:\Users\HP-PC\source\repos\dotNet5779\Project02_1355_5695_dotNet5779\DbFiles2\";
 
         private string TestFileName = "Tests.xml";
@@ -179,9 +171,8 @@ namespace DAL
         public string TraineeFile { get => $"{XmlDbPath}{TraineeFileName}"; }
 
 
-        //public void AddTest(Test test, int testerID, int traineeID)
+        //public void Add(Tester t)
         //{
-
         //    XElement xEle = XElement.Load(TestFile);
         //    if (xEle != null)
         //    {
