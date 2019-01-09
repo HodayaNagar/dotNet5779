@@ -38,7 +38,7 @@ namespace DAL
             set
             {
                 if (testersList != null)
-                  saveListToXMLTester(testersList, TesterFile);
+                    saveListToXMLTester(testersList, TesterFile);
             }
         }
         public List<Trainee> Trainees
@@ -173,15 +173,15 @@ namespace DAL
 
         //public void Add(Tester t)
         //{
-        //    XElement xEle = XElement.Load(TestFile);
+        //    XElement xEle = XElement.Load(TesterFile);
         //    if (xEle != null)
         //    {
-        //        string testDetail = test.ToXml();
-        //        //<?xml version="1.0" encoding="utf-16"?>
-        //        testDetail = testDetail.Remove(0, 40);
+        //        string testDetail = t.ToXml();
+        //        //  <? xml version = "1.0" encoding = "utf-16" ?>
+        //        string testerDetail = testDetail.Remove(0, 40);
         //        Console.WriteLine(testDetail);
-        //        xEle.Add(testDetail);
-        //        xEle.Save(TestFile);
+        //        xEle.Add(testerDetail);
+        //        xEle.Save(TesterFile);
         //    }
         //    else throw new Exception("File not exsist");
 

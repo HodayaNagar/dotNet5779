@@ -12,8 +12,6 @@ namespace BL
 {
     public class BL_imp : IBL
     {
-        //static DAL.IDAL dal = dal;
-
         private static DAL.IDAL dal = DAL.FactorySingletonDal.Current;
 
         #region Tester Functions
@@ -177,19 +175,19 @@ namespace BL
             Trainee trainee = GetTrainee(test.TraineeID);
             if (trainee == null)
             {
-                throw new Exception("Trainee does not exsist");
+                throw new Exception($"Trainee does not exsist");
             }
 
             Tester tester = GetTester(test.TesterID);
             if (tester == null)
             {
-                throw new Exception("Tester does not exsist");
+                throw new Exception($"Tester does not exsist");
             }
 
             // בודקים את הפרש המבחן הקודם אם היה למבחן החדש
-            if (DifferenceBetweenTwoDates(test, traineeID) < BE.Configuration.MinGapTest && DifferenceBetweenTwoDates(test, traineeID)>0)
+            if (GapBetweenTwoDates(test, traineeID) < BE.Configuration.MinGapTest && GapBetweenTwoDates(test, traineeID) > 0)
             {
-                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {DifferenceBetweenTwoDates(test, traineeID)} days passed since the last test");
+                throw new Exception($"The gap between tests is less than {Configuration.MinGapTest}, {GapBetweenTwoDates(test, traineeID)} days passed since the last test");
             }
 
             //לא ניתן לקבוע מבחן לתלמיד שעשה פחות מ20 שיעורים
@@ -291,7 +289,7 @@ namespace BL
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        public double DifferenceBetweenTwoDates(Test test, int traineeID)
+        public double GapBetweenTwoDates(Test test, int traineeID)
         {
             DateTime lastTest = DateTime.Now;
             //בודקים ברשימת הטסטים האים קיים תלמיד עם אותו תז בפעם האחרונה שלו
@@ -305,12 +303,12 @@ namespace BL
             return (test.TestTime - lastTest).TotalDays;
         }
 
-        public DateTime SearchForNewDateOfTest(DateTime date)
+        public DateTime SearchForNewDateOfTest(DateTime dateTime)
         {
             DateTime closestDate = DateTime.Now;
             foreach (var item in GetAllTests())
             {
-                if (item.TestDate > date && item.TestDate < closestDate && GetAvailableTesters(item.TestDate).Count() > 0)
+                if (item.TestDate > dateTime && item.TestDate < closestDate && GetAvailableTesters(item.TestDate).Count() > 0)
                 {
                     closestDate = item.TestDate;
                 }
@@ -333,6 +331,7 @@ namespace BL
             return false;
         }
 
+        // בדיקת תקינות תעודת זהות ישראלית
         public bool IsValidId(int id)
         {
             if (id < 1 || id > 999999999) return false;
@@ -395,7 +394,7 @@ namespace BL
         }
 
         // כל הבוחנים שגרים בסביבת הכתובת המבוקשת
-        public IEnumerable<Tester> GetDistance(string adrs)
+        public IEnumerable<Tester> GetTestersInArea(string adrs)
         {
             return GetAllTesters(gat => Distance(gat.Address.ToString(), adrs) < gat.MaxDistanceInKilometers);
         }
@@ -409,31 +408,35 @@ namespace BL
         // האם תלמיד עמד בדרישות של המבחן
         public bool PassedTest(int traineeID)
         {
-            //Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
-            //t1.Result = Pass.Passed;
-            //foreach (var item in t1.Requirements)
-            //{
-            //    if (item.Value != Pass.Passed)
-            //    {
-            //        t1.Result = Pass.Failed;
-            //    }
-            //}
-            //return t1.Result == Pass.Passed;
-            return true;
+            Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
+            if (t1.Result == Pass.Passed)
+                foreach (var item in t1.Requirements)
+                {
+                    if (item.Value != Pass.Passed)
+                    {
+                        t1.Result = Pass.Failed;
+                    }
+                }
+            return t1.Result == Pass.Passed;
         }
 
         // כל הבוחנים שפנויים באותה שעה 
-        public IEnumerable<Tester> GetAvailableTesters(DateTime date)
+        public IEnumerable<Tester> GetAvailableTesters(DateTime dateTime)
         {
-            return GetAllTesters(gat => gat.IsWorking(date) == true && gat.IsAvailable(date) == true);
+            return GetAllTesters(gat => gat.IsWorking(dateTime) == true && gat.IsAvailable(dateTime) == true);
         }
 
         // כל המבחנים לפי יום
-        public IEnumerable<Test> GetTestsByDay(DayOfWeek dayOfWeek)
+        public IEnumerable<Test> GetTestsByDay(DateTime dateTime)
         {
-            return GetAllTests(gat => gat.TestDate.DayOfWeek == dayOfWeek);
+            return GetAllTests(gat => gat.TestDate == dateTime);
         }
 
+        // כל המבחנים לפי חודש
+        public IEnumerable<Test> GetTestsByMonth(DateTime dateTime)
+        {
+            return GetAllTests(gat => gat.TestDate.Year == dateTime.Year && gat.TestDate.Month == dateTime.Month);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -509,16 +512,16 @@ namespace BL
 
         }
 
-        public static void PrintProperty<T>(T t)
-        {
+        //public static void PrintProperty<T>(T t)
+        //{
 
-            foreach (PropertyInfo item in t.GetType().GetProperties())
-            {
-                Console.WriteLine
-                    ("name: {0,-15} value: {1,-15}"
-                    , item.Name, item.GetValue(t, null));
-            }
-        }
+        //    foreach (PropertyInfo item in t.GetType().GetProperties())
+        //    {
+        //        Console.WriteLine
+        //            ("name: {0,-15} value: {1,-15}"
+        //            , item.Name, item.GetValue(t, null));
+        //    }
+        //}
 
     }
 }

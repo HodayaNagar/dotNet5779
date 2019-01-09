@@ -51,19 +51,19 @@ namespace BL
 
         #endregion
 
-        double DifferenceBetweenTwoDates(Test test, int traineeID);
-        DateTime SearchForNewDateOfTest(DateTime date);
+        double GapBetweenTwoDates(Test test, int traineeID);
+        DateTime SearchForNewDateOfTest(DateTime dateTime);
         bool HasTestAtSameDate(Test test, int testerID, int traineeID);
 
 
         double Distance(string address1, string address2);
 
-        IEnumerable<Tester> GetDistance(string adrs);
+        IEnumerable<Tester> GetTestersInArea(string adrs);
         int TestsSum(Trainee trainee);
         bool PassedTest(int traineeID);
-        IEnumerable<Tester> GetAvailableTesters(DateTime date);
-        IEnumerable<Test> GetTestsByDay(DayOfWeek dayOfWeek);
-
+        IEnumerable<Tester> GetAvailableTesters(DateTime dadateTimete);
+        IEnumerable<Test> GetTestsByDay(DateTime dateTime);
+        IEnumerable<Test> GetTestsByMonth(DateTime dateTime);
 
 
 
