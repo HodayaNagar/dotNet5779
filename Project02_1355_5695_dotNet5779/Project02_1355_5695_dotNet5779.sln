@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbFiles", "DbFiles", "{B0C7
 		DbFiles2\Trainees.xml = DbFiles2\Trainees.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLWPF", "PLWPF\PLWPF.csproj", "{EF989F56-0F77-4D0D-B3B0-BA42401AC6D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{92111DB8-5B7D-48AC-BA6F-0B7E5DF4CB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92111DB8-5B7D-48AC-BA6F-0B7E5DF4CB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92111DB8-5B7D-48AC-BA6F-0B7E5DF4CB5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF989F56-0F77-4D0D-B3B0-BA42401AC6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF989F56-0F77-4D0D-B3B0-BA42401AC6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF989F56-0F77-4D0D-B3B0-BA42401AC6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF989F56-0F77-4D0D-B3B0-BA42401AC6D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
