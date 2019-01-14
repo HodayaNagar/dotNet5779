@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace BE
 {
@@ -11,6 +12,7 @@ namespace BE
 
         public DateTime TestTime { get; set; }
         public Address StartingPoint { get; set; }
+        [XmlIgnore]
         public Dictionary<TestCriterion, Pass> Requirements { get; set; }
 
         public Pass Result { get; set; }

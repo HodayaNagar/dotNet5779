@@ -170,13 +170,13 @@ namespace BL
             {
                 throw new Exception($"Trainee ID is valid");
             }
-            Trainee trainee = GetTrainee(test.TraineeID);
+            Trainee trainee = GetTrainee(traineeID);
             if (trainee == null)
             {
                 throw new Exception($"Trainee does not exsist");
             }
 
-            Tester tester = GetTester(test.TesterID);
+            Tester tester = GetTester(testerID);
             if (tester == null)
             {
                 throw new Exception($"Tester does not exsist");

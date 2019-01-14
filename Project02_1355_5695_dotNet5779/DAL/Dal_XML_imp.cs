@@ -31,20 +31,6 @@ namespace DAL
             Testers = testersList;
             Trainees = traineesList;
             Tests = testsList;
-
-            //foreach (var item in Testers)
-            //{
-            //    Console.WriteLine(item.ToXml());
-            //}
-            //foreach (var item in Trainees)
-            //{
-            //    Console.WriteLine(item.ToXml());
-            //}
-            //foreach (var item in Tests)
-            //{
-            //    Console.WriteLine(item.ToXml());
-            //}
-
         }
 
         private List<Tester> testersList;
@@ -233,8 +219,7 @@ namespace DAL
 
         public void UpdateTester(Tester tester)
         {
-            tester.ID = $"{Convert.ToInt32(tester.ID):000000000}";
-            int index = testersList.FindIndex(tl => tl.ID == tester.ID.CalculateMD5Hash());
+            int index = testersList.FindIndex(tl => tl.ID == tester.ID);
             if (index == -1)
             {
                 throw new Exception("Tester with the same id not found");
@@ -286,8 +271,7 @@ namespace DAL
 
         public void UpdateTrainee(Trainee trainee)
         {
-            trainee.ID = $"{Convert.ToInt32(trainee.ID):000000000}";
-            int index = traineesList.FindIndex(tl => tl.ID == trainee.ID.CalculateMD5Hash());
+            int index = traineesList.FindIndex(tl => tl.ID == trainee.ID);
             if (index == -1)
             {
                 throw new Exception("Trainee with the same id not found");
@@ -321,11 +305,6 @@ namespace DAL
             testerID = $"{Convert.ToInt32(testerID):000000000}";
             traineeID = $"{Convert.ToInt32(traineeID):000000000}";
 
-            Test t1 = GetTest(test.TestID);
-            if (t1 != null)
-            {
-                throw new Exception("Test with the same id already exists");
-            }
             Tester t2 = GetTester(testerID);
             if (t2 == null)
             {
@@ -336,10 +315,17 @@ namespace DAL
             {
                 throw new Exception("Trainee with the same id not found");
             }
+          
+
             test.TestID = Configuration.RunningTestID++;
             test.TesterID = testerID.CalculateMD5Hash();
             test.TraineeID = traineeID.CalculateMD5Hash();
-           // t2.AvailableSchedule[(int)test.TestDate.DayOfWeek, test.TestDate.Hour] = false;
+            t2.AvailableSchedule[(int)test.TestDate.DayOfWeek, test.TestDate.Hour] = false;
+            t2.WeeklyTests++;
+            t3.DrivingInstructorFirstName = t2.FirstName;
+            t3.DrivingInstructorLastName = t2.LastName;
+            UpdateTester(t2);
+            UpdateTrainee(t3);
             testsList.Add(test);
         }
 

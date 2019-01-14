@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Trainees>
   <Trainee>
-    <ID>12345674</ID>
+    <ID>E446992C40B9733E3A08057CD32483D3</ID>
     <FirstName>Trainee0</FirstName>
     <LastName>Trainee0</LastName>
-    <BirthDate>2000-12-12T00:00:00</BirthDate>
+    <BirthDate>1999-12-12T00:00:00</BirthDate>
     <Gender>Male</Gender>
     <Address>
       <City>Tel Aviv</City>
@@ -15,11 +15,11 @@
     <GearType>Automatic</GearType>
     <DrivingSchool>smartdrive</DrivingSchool>
     <TotalLessonsNumber>28</TotalLessonsNumber>
-    <DrivingInstructorFirstName>Instructor0</DrivingInstructorFirstName>
-    <DrivingInstructorLastName>of trainee ID:0</DrivingInstructorLastName>
+    <DrivingInstructorFirstName>Tester2</DrivingInstructorFirstName>
+    <DrivingInstructorLastName>Tester2</DrivingInstructorLastName>
   </Trainee>
   <Trainee>
-    <ID>12345671</ID>
+    <ID>314953776F0C08AAD429A1D1B7C39F63</ID>
     <FirstName>Trainee1</FirstName>
     <LastName>Trainee1</LastName>
     <BirthDate>2000-12-12T00:00:00</BirthDate>
@@ -35,5 +35,23 @@
     <TotalLessonsNumber>30</TotalLessonsNumber>
     <DrivingInstructorFirstName>Instructor1</DrivingInstructorFirstName>
     <DrivingInstructorLastName>of trainee ID:1</DrivingInstructorLastName>
+  </Trainee>
+  <Trainee>
+    <ID>755F801D34CB6E95E618C6AA80E04B04</ID>
+    <FirstName>Trainee2</FirstName>
+    <LastName>Trainee2</LastName>
+    <BirthDate>2000-12-12T00:00:00</BirthDate>
+    <Gender>Male</Gender>
+    <Address>
+      <City>Tel Aviv</City>
+      <StreetName>Hagana</StreetName>
+      <BuildingNumber>52</BuildingNumber>
+    </Address>
+    <CarTrained>Private</CarTrained>
+    <GearType>Automatic</GearType>
+    <DrivingSchool>smartdrive</DrivingSchool>
+    <TotalLessonsNumber>30</TotalLessonsNumber>
+    <DrivingInstructorFirstName>Instructor2</DrivingInstructorFirstName>
+    <DrivingInstructorLastName>of trainee ID:2</DrivingInstructorLastName>
   </Trainee>
 </Trainees>
