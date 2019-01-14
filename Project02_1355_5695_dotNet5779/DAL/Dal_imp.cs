@@ -30,7 +30,7 @@ namespace DAL
             testersList.Add(tester);
         }
 
-        public bool RemoveTester(int testerID)
+        public bool RemoveTester(string testerID)
         {
             Tester t = GetTester(testerID);
             if (t == null)
@@ -52,7 +52,7 @@ namespace DAL
             testersList[index] = tester;
         }
 
-        public Tester GetTester(int testerID)
+        public Tester GetTester(string testerID)
         {
             return testersList.FirstOrDefault(tl => tl.ID == testerID);
         }
@@ -78,7 +78,7 @@ namespace DAL
             traineesList.Add(trainee);
         }
 
-        public bool RemoveTrainee(int traineeID)
+        public bool RemoveTrainee(string traineeID)
         {
             Trainee t = GetTrainee(traineeID);
             if (t == null)
@@ -100,7 +100,7 @@ namespace DAL
             traineesList[index] = trainee;
         }
 
-        public Trainee GetTrainee(int traineeID)
+        public Trainee GetTrainee(string traineeID)
         {
             return traineesList.FirstOrDefault(tl => tl.ID == traineeID);
         }
@@ -118,7 +118,7 @@ namespace DAL
 
         #region Test Functions
 
-        public void AddTest(Test test, int testerID, int traineeID)
+        public void AddTest(Test test, string testerID, string traineeID)
         {
             // צריך לבדוק שבוחן ונבחן שרשומים קיימים ברשימות ושהמבחן לא קיים ברשימה
             Test t1 = GetTest(test.TestID);

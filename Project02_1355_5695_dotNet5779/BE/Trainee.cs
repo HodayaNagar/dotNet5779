@@ -4,7 +4,7 @@ namespace BE
 {
     public class Trainee
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         public String FirstName { get; set; }
         public String LastName { get; set; }
@@ -12,6 +12,7 @@ namespace BE
         public Gender Gender { get; set; }
         public Address Address { get; set; }
         public string MobileNumber { get; set; }
+        public string Gmail { get; set; }
 
         public CarType CarTrained { get; set; }
         public GearType GearType { get; set; }

@@ -5,7 +5,7 @@ namespace BE
 {
     public class Tester
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         [XmlIgnore]
         public string FullName { get => $"{FirstName} {LastName}"; }
@@ -15,6 +15,7 @@ namespace BE
         public Gender Gender { get; set; }
         public Address Address { get; set; }
         public string MobileNumber { get; set; }
+        public string Gmail { get; set; }
 
         public int Seniority { get; set; } // ותק בעבודה
         public CarType CarSpecializtion { get; set; }

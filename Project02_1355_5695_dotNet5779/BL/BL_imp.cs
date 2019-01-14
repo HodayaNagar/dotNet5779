@@ -12,8 +12,6 @@ namespace BL
 {
     public class BL_imp : IBL
     {
-        private static DAL.IDAL dal = DAL.FactorySingletonDal.Current;
-
         #region Tester Functions
 
         public void AddTester(Tester tester)
@@ -33,7 +31,7 @@ namespace BL
 
             try
             {
-                dal.AddTester(tester);
+                DAL.FactorySingletonDal.Current.AddTester(tester);
             }
             catch (Exception exception)
             {
@@ -41,7 +39,7 @@ namespace BL
             }
         }
 
-        public bool RemoveTester(int testerID)
+        public bool RemoveTester(string testerID)
         {
             if (IsValidId(testerID) == false)
             {
@@ -49,7 +47,7 @@ namespace BL
             }
             try
             {
-                dal.RemoveTester(testerID);
+                DAL.FactorySingletonDal.Current.RemoveTester(testerID);
             }
             catch (Exception exception)
             {
@@ -66,7 +64,7 @@ namespace BL
             }
             try
             {
-                dal.UpdateTester(tester);
+                DAL.FactorySingletonDal.Current.UpdateTester(tester);
             }
             catch (Exception exception)
             {
@@ -74,18 +72,18 @@ namespace BL
             }
         }
 
-        public Tester GetTester(int testerID)
+        public Tester GetTester(string testerID)
         {
             if (IsValidId(testerID) == false)
             {
                 throw new Exception($"Tester ID is valid");
             }
-            return dal.GetTester(testerID);
+            return DAL.FactorySingletonDal.Current.GetTester(testerID);
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
         {
-            return dal.GetAllTesters(predicate);
+          return  DAL.FactorySingletonDal.Current.GetAllTesters(predicate);
         }
         #endregion
 
@@ -104,7 +102,7 @@ namespace BL
 
             try
             {
-                dal.AddTrainee(trainee);
+                DAL.FactorySingletonDal.Current.AddTrainee(trainee);
             }
             catch (Exception exception)
             {
@@ -112,7 +110,7 @@ namespace BL
             }
         }
 
-        public bool RemoveTrainee(int traineeID)
+        public bool RemoveTrainee(string traineeID)
         {
             if (IsValidId(traineeID) == false)
             {
@@ -120,7 +118,7 @@ namespace BL
             }
             try
             {
-                dal.RemoveTrainee(traineeID);
+                DAL.FactorySingletonDal.Current.RemoveTrainee(traineeID);
             }
             catch (Exception exception)
             {
@@ -137,7 +135,7 @@ namespace BL
             }
             try
             {
-                dal.UpdateTrainee(trainee);
+                DAL.FactorySingletonDal.Current.UpdateTrainee(trainee);
             }
             catch (Exception exception)
             {
@@ -145,24 +143,24 @@ namespace BL
             }
         }
 
-        public Trainee GetTrainee(int traineeID)
+        public Trainee GetTrainee(string traineeID)
         {
             if (IsValidId(traineeID) == false)
             {
                 throw new Exception($"Trainee ID is valid");
             }
-            return dal.GetTrainee(traineeID);
+            return DAL.FactorySingletonDal.Current.GetTrainee(traineeID);
         }
 
         public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
         {
-            return dal.GetAllTrainees(predicate);
+           return DAL.FactorySingletonDal.Current.GetAllTrainees(predicate);
         }
         #endregion
 
         #region Test Functions
 
-        public void AddTest(Test test, int testerID, int traineeID)
+        public void AddTest(Test test, string testerID, string traineeID)
         {
             if (IsValidId(testerID) == false)
             {
@@ -232,7 +230,7 @@ namespace BL
 
             try
             {
-                dal.AddTest(test, testerID, traineeID);
+                DAL.FactorySingletonDal.Current.AddTest(test, testerID, traineeID);
             }
             catch (Exception exception)
             {
@@ -253,7 +251,7 @@ namespace BL
 
             try
             {
-                dal.UpdateTest(test);
+                DAL.FactorySingletonDal.Current.UpdateTest(test);
             }
             catch (Exception exception)
             {
@@ -265,7 +263,7 @@ namespace BL
         {
             try
             {
-                dal.RemoveTest(testID);
+                DAL.FactorySingletonDal.Current.RemoveTest(testID);
             }
             catch (Exception exception)
             {
@@ -276,12 +274,12 @@ namespace BL
 
         public Test GetTest(long testID)
         {
-            return dal.GetTest(testID);
+               return DAL.FactorySingletonDal.Current.GetTest(testID);
         }
 
         public IEnumerable<Test> GetAllTests(Func<Test, bool> predicate = null)
         {
-            return dal.GetAllTests(predicate);
+            return DAL.FactorySingletonDal.Current.GetAllTests(predicate);
         }
         #endregion
 
@@ -289,7 +287,7 @@ namespace BL
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        public double GapBetweenTwoDates(Test test, int traineeID)
+        public double GapBetweenTwoDates(Test test, string traineeID)
         {
             DateTime lastTest = DateTime.Now;
             //בודקים ברשימת הטסטים האים קיים תלמיד עם אותו תז בפעם האחרונה שלו
@@ -316,7 +314,7 @@ namespace BL
             return closestDate;
         }
 
-        public bool HasTestAtSameDate(Test test, int testerID, int traineeID)
+        public bool HasTestAtSameDate(Test test, string testerID, string traineeID)
         {
             foreach (var item in GetAllTests())
             {
@@ -332,11 +330,11 @@ namespace BL
         }
 
         // בדיקת תקינות תעודת זהות ישראלית
-        public bool IsValidId(int id)
+        public bool IsValidId(string id)
         {
-            if (id < 1 || id > 999999999) return false;
-            string fullId = $"{id:000000000}";
-
+            if (Convert.ToInt32(id) < 1 || Convert.ToInt32(id) > 999999999) return false;
+            string fullId = $"{Convert.ToInt32(id):000000000}";
+            //string fullId = id;
             int mone = 0;
             int incNum;
             for (int i = 0; i < 9; i++)
@@ -349,6 +347,7 @@ namespace BL
             }
             if (mone % 10 == 0)
                 return true;
+           
             else
                 return false;
 
@@ -406,18 +405,10 @@ namespace BL
         }
 
         // האם תלמיד עמד בדרישות של המבחן
-        public bool PassedTest(int traineeID)
+        public bool PassedTest(string traineeID)
         {
-            Test t1 = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
-            if (t1.Result == Pass.Passed)
-                foreach (var item in t1.Requirements)
-                {
-                    if (item.Value != Pass.Passed)
-                    {
-                        t1.Result = Pass.Failed;
-                    }
-                }
-            return t1.Result == Pass.Passed;
+            Test test = GetAllTests(gat => gat.TraineeID == traineeID).FirstOrDefault();
+            return test.Result == Pass.Passed;
         }
 
         // כל הבוחנים שפנויים באותה שעה 

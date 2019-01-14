@@ -1,7 +1,10 @@
 using BE;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,11 +12,33 @@ namespace Console
 {
     class Program
     {
+        public static void SendMail()
+        {
+            var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential("DotNetProject5779SendMessage@gmail.com", "dotNet5779"),
+                EnableSsl = true
+            };
+            client.Send("DotNetProject5779SendMessage@gmail.com", "hodaya30hn@gmail.com", "test", "This Is A Test Of Program");
+        }
+
         static void Main(string[] args)
         {
-        
+
             try
             {
+
+
+                // SendMail();
+                
+
+                //Tester t = new Tester();
+                //t.ID = "54379912";
+                //t.FirstName = "mi";
+                //t.LastName = "amor";
+                //t.BirthDate = new DateTime(1979, 6, 3);
+                //BL.FactorySingletonBL.Current.AddTester(t);
+
 
             }
 
@@ -26,3 +51,4 @@ namespace Console
         }
     }
 }
+//721DE052285689AC0819312CEC7003FC

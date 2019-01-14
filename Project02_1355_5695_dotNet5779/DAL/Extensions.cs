@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -22,7 +23,6 @@ namespace DAL
             }
         }
 
-
         // Clean Xml
         public static string ToXml<T>(this T obj)
         {
@@ -32,6 +32,7 @@ namespace DAL
             XmlSerializerNamespaces emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
             XmlWriterSettings settings = new XmlWriterSettings()
             {
+              //  Encoding = Encoding.UTF8,
                 Indent = true,
                 OmitXmlDeclaration = true
             };
@@ -48,14 +49,37 @@ namespace DAL
             }
         }
 
-
-        public static string GetXMLAsString(XmlElement myxml)
+        public static string xmlWriting(this string s)
         {
-            StringWriter sw = new StringWriter();
-            XmlTextWriter tx = new XmlTextWriter(sw);
-            string str = sw.ToString();// 
-            return str;
+            s = s.Replace("&lt;", "<");
+            s = s.Replace("&gt;", ">");
+            //# this has to be last:
+            s = s.Replace("&amp;", "&");
+            return s;
         }
+
+        public static string CalculateMD5Hash(this string input)
+        {
+            // step 1, calculate MD5 hash from input
+
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
+
         /*
         public static string Serialize<T>(this T value)
         {

@@ -1,37 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Testers>
-<Tester>
-  <ID>12345674</ID>
-  <FirstName>Tester0</FirstName>
-  <LastName>Tester0</LastName>
-  <BirthDate>2000-12-12T00:00:00</BirthDate>
-  <Gender>Male</Gender>
-  <Address>
-    <City>Tel Aviv</City>
-    <StreetName>Hagana</StreetName>
-    <BuildingNumber>57</BuildingNumber>
-  </Address>
-  <Seniority>15</Seniority>
-  <CarSpecializtion>Private</CarSpecializtion>
-  <MaxWeeklyTests>2</MaxWeeklyTests>
-  <WeeklyTests>0</WeeklyTests>
-  <MaxDistanceInKilometers>20</MaxDistanceInKilometers>
-</Tester>
-<Tester>
-  <ID>12345677</ID>
-  <FirstName>Tester1</FirstName>
-  <LastName>Tester1</LastName>
-  <BirthDate>2000-12-12T00:00:00</BirthDate>
-  <Gender>Femaleale</Gender>
-  <Address>
-    <City>Tel Aviv</City>
-    <StreetName>Hagana</StreetName>
-    <BuildingNumber>56</BuildingNumber>
-  </Address>
-  <Seniority>14</Seniority>
-  <CarSpecializtion>Private</CarSpecializtion>
-  <MaxWeeklyTests>2</MaxWeeklyTests>
-  <WeeklyTests>0</WeeklyTests>
-  <MaxDistanceInKilometers>20</MaxDistanceInKilometers>
-</Tester>
+  <Tester>
+    <ID>C0E5C22FBCBA35BFCC27ED6BD3362D3E</ID>
+    <FirstName>Tester0</FirstName>
+    <LastName>Tester0</LastName>
+    <BirthDate>1980-12-12T00:00:00</BirthDate>
+    <Gender>Male</Gender>
+    <Address>
+      <City>Tel Aviv</City>
+      <StreetName>Hagana</StreetName>
+      <BuildingNumber>57</BuildingNumber>
+    </Address>
+    <Seniority>15</Seniority>
+    <CarSpecializtion>Private</CarSpecializtion>
+    <MaxWeeklyTests>2</MaxWeeklyTests>
+    <WeeklyTests>0</WeeklyTests>
+    <MaxDistanceInKilometers>20</MaxDistanceInKilometers>
+  </Tester>
+  <Tester>
+    <ID>721DE052285689AC0819312CEC7003FC</ID>
+    <FirstName>Tester1</FirstName>
+    <LastName>Tester1</LastName>
+    <BirthDate>1970-12-12T00:00:00</BirthDate>
+    <Gender>Female</Gender>
+    <Address>
+      <City>Tel Aviv</City>
+      <StreetName>Hagana</StreetName>
+      <BuildingNumber>56</BuildingNumber>
+    </Address>
+    <Seniority>14</Seniority>
+    <CarSpecializtion>Private</CarSpecializtion>
+    <MaxWeeklyTests>5</MaxWeeklyTests>
+    <WeeklyTests>0</WeeklyTests>
+    <MaxDistanceInKilometers>20</MaxDistanceInKilometers>
+  </Tester>
+  <Tester>
+    <ID>721DE052285689AC0819312CEC7003FC</ID>
+    <FirstName>Tester1</FirstName>
+    <LastName>Tester1</LastName>
+    <BirthDate>1975-12-12T00:00:00</BirthDate>
+    <Gender>Female</Gender>
+    <Address>
+      <City>Tel Aviv</City>
+      <StreetName>Hagana</StreetName>
+      <BuildingNumber>50</BuildingNumber>
+    </Address>
+    <Seniority>14</Seniority>
+    <CarSpecializtion>Private</CarSpecializtion>
+    <MaxWeeklyTests>5</MaxWeeklyTests>
+    <WeeklyTests>0</WeeklyTests>
+    <MaxDistanceInKilometers>50</MaxDistanceInKilometers>
+  </Tester>
 </Testers>
