@@ -194,26 +194,26 @@ namespace DAL
         #region Tester Functions
         public void AddTester(Tester tester)
         {
-            tester.ID = $"{Convert.ToInt32(tester.ID):000000000}";
+            //tester.ID = $"{Convert.ToInt32(tester.ID):000000000}";
             Tester t = GetTester(tester.ID);
             if (t != null)
             {
                 throw new Exception("Tester with the same id already exists");
             }
-            tester.ID = tester.ID.CalculateMD5Hash();
+            tester.ID = tester.ID.GetHashedId();
             testersList.Add(tester);
         }
 
         public bool RemoveTester(string testerID)
         {
-            testerID = $"{Convert.ToInt32(testerID):000000000}";
+            //testerID = $"{Convert.ToInt32(testerID):000000000}";
             Tester t = GetTester(testerID);
             if (t == null)
             {
                 throw new Exception("Tester with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
-            testsList.RemoveAll(tl => tl.TesterID == testerID.CalculateMD5Hash());
+            testsList.RemoveAll(tl => tl.TesterID == testerID.GetHashedId());
             return testersList.Remove(t);
         }
 
@@ -229,8 +229,8 @@ namespace DAL
 
         public Tester GetTester(string testerID)
         {
-            testerID = $"{Convert.ToInt32(testerID):000000000}";
-            return testersList.FirstOrDefault(tl => tl.ID == testerID.CalculateMD5Hash());
+            //testerID = $"{Convert.ToInt32(testerID):000000000}";
+            return testersList.FirstOrDefault(tl => tl.ID == testerID.GetHashedId());
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
@@ -246,26 +246,24 @@ namespace DAL
         #region Trainee Functions
         public void AddTrainee(Trainee trainee)
         {
-            trainee.ID = $"{Convert.ToInt32(trainee.ID):000000000}";
             Trainee t = GetTrainee(trainee.ID);
             if (t != null)
             {
                 throw new Exception("Trainee with the same id already exists");
             }
-            trainee.ID = trainee.ID.CalculateMD5Hash();
+            trainee.ID = trainee.ID.GetHashedId();
             traineesList.Add(trainee);
         }
 
         public bool RemoveTrainee(string traineeID)
         {
-            traineeID = $"{Convert.ToInt32(traineeID):000000000}";
             Trainee t = GetTrainee(traineeID);
             if (t == null)
             {
                 throw new Exception("Trainee with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
-            testsList.RemoveAll(tl => tl.TraineeID == traineeID.CalculateMD5Hash());
+            testsList.RemoveAll(tl => tl.TraineeID == traineeID.GetHashedId());
             return traineesList.Remove(t);
         }
 
@@ -281,8 +279,8 @@ namespace DAL
 
         public Trainee GetTrainee(string traineeID)
         {
-            traineeID = $"{Convert.ToInt32(traineeID):000000000}";
-            return traineesList.FirstOrDefault(tl => tl.ID == traineeID.CalculateMD5Hash());
+            //traineeID = $"{Convert.ToInt32(traineeID):000000000}";
+            return traineesList.FirstOrDefault(tl => tl.ID == traineeID.GetHashedId());
         }
 
         public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
@@ -302,8 +300,8 @@ namespace DAL
         {
             // צריך לבדוק שבוחן ונבחן שרשומים קיימים ברשימות ושהמבחן לא קיים ברשימה
 
-            testerID = $"{Convert.ToInt32(testerID):000000000}";
-            traineeID = $"{Convert.ToInt32(traineeID):000000000}";
+            //testerID = $"{Convert.ToInt32(testerID):000000000}";
+            //traineeID = $"{Convert.ToInt32(traineeID):000000000}";
 
             Tester t2 = GetTester(testerID);
             if (t2 == null)
@@ -318,9 +316,11 @@ namespace DAL
           
 
             test.TestID = Configuration.RunningTestID++;
-            test.TesterID = testerID.CalculateMD5Hash();
-            test.TraineeID = traineeID.CalculateMD5Hash();
-            t2.AvailableSchedule[(int)test.TestDate.DayOfWeek, test.TestDate.Hour] = false;
+            //test.TesterID = testerID.CalculateMD5Hash();
+            //test.TraineeID = traineeID.CalculateMD5Hash();
+            test.TesterID = testerID;
+            test.TraineeID = traineeID;
+            t2.AvailableSchedule[test.TestDate.NumberDayOfWeek(), test.TestDate.Hour] = false;
             t2.WeeklyTests++;
             t3.DrivingInstructorFirstName = t2.FirstName;
             t3.DrivingInstructorLastName = t2.LastName;
