@@ -1,0 +1,15 @@
+<Window x:Class="PLWPF.Identify"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLWPF"
+        mc:Ignorable="d"
+        Title="Identify" Height="365.864" Width="678.895">
+    <Grid Margin="0,0,2,-5">
+        <Label x:Name="lblIdentify" Content="Please enter your ID:" HorizontalAlignment="Left" Height="67" Margin="223,76,0,0" VerticalAlignment="Top" Width="202" FontSize="20"/>
+        <TextBox x:Name="txtID" HorizontalAlignment="Left" Height="31" Margin="223,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="197" TextChanged="txtID_TextChanged"/>
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" Height="38" Margin="223,232,0,0" VerticalAlignment="Top" Width="197" Click="btnOK_Click" IsEnabled="False"/>
+
+    </Grid>
+</Window>
