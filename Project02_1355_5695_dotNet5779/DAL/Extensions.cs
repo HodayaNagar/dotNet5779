@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -57,30 +57,44 @@ namespace DAL
             s = s.Replace("&amp;", "&");
             return s;
         }
-                
-        /*
-        public static string Serialize<T>(this T value)
+
+        /// <summary>
+        /// Calculate hashed id number by using MD5 algorithm
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static string GetHashedID(this string input)
         {
-            if (value == null)
+            // step 1, calculate MD5 hash from input
+
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
             {
-                return string.Empty;
+                sb.Append(hash[i].ToString("X2"));
             }
-            try
-            {
-                var xmlserializer = new XmlSerializer(typeof(T));
-                var stringWriter = new StringWriter();
-                using (var writer = XmlWriter.Create(stringWriter))
-                {
-                    xmlserializer.Serialize(writer, value);
-                    return stringWriter.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("An error occurred", ex);
-            }
+
+            return sb.ToString();
         }
-        */
+
+
+        public static string ToFullID(this string ID)
+        {
+            return ID.PadLeft(9, '0');
+        }
+
+        public static int NumberDayOfWeek(this DateTime d)
+        {
+            return (int)d.DayOfWeek;
+        }
+
         //public static string ToXml(this object obj)
         //{
         //    if (obj == null) return string.Empty;
