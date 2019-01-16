@@ -192,28 +192,29 @@ namespace DAL
 
 
         #region Tester Functions
+
         public void AddTester(Tester tester)
         {
-            //tester.ID = $"{Convert.ToInt32(tester.ID):000000000}";
+            tester.ID.ToFullID();
             Tester t = GetTester(tester.ID);
             if (t != null)
             {
                 throw new Exception("Tester with the same id already exists");
             }
-            tester.ID = tester.ID.GetHashedId();
+            tester.ID.GetHashedID();
             testersList.Add(tester);
         }
 
         public bool RemoveTester(string testerID)
         {
-            //testerID = $"{Convert.ToInt32(testerID):000000000}";
+            testerID.ToFullID();
             Tester t = GetTester(testerID);
             if (t == null)
             {
                 throw new Exception("Tester with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
-            testsList.RemoveAll(tl => tl.TesterID == testerID.GetHashedId());
+            testsList.RemoveAll(tl => tl.TesterID == testerID.GetHashedID());
             return testersList.Remove(t);
         }
 
@@ -229,8 +230,8 @@ namespace DAL
 
         public Tester GetTester(string testerID)
         {
-            //testerID = $"{Convert.ToInt32(testerID):000000000}";
-            return testersList.FirstOrDefault(tl => tl.ID == testerID.GetHashedId());
+            testerID.ToFullID();
+            return testersList.FirstOrDefault(tl => tl.ID == testerID.GetHashedID());
         }
 
         public IEnumerable<Tester> GetAllTesters(Func<Tester, bool> predicate = null)
@@ -241,29 +242,33 @@ namespace DAL
             }
             return testersList.Where(predicate);
         }
+
         #endregion
 
         #region Trainee Functions
+
         public void AddTrainee(Trainee trainee)
         {
+            trainee.ID.ToFullID();
             Trainee t = GetTrainee(trainee.ID);
             if (t != null)
             {
                 throw new Exception("Trainee with the same id already exists");
             }
-            trainee.ID = trainee.ID.GetHashedId();
+            trainee.ID = trainee.ID.GetHashedID();
             traineesList.Add(trainee);
         }
 
         public bool RemoveTrainee(string traineeID)
         {
+            traineeID.ToFullID();
             Trainee t = GetTrainee(traineeID);
             if (t == null)
             {
                 throw new Exception("Trainee with the same id not found");
             }
             // צריך להסיר אותו מהמבחנים שהוא רשום אליהם
-            testsList.RemoveAll(tl => tl.TraineeID == traineeID.GetHashedId());
+            testsList.RemoveAll(tl => tl.TraineeID == traineeID.GetHashedID());
             return traineesList.Remove(t);
         }
 
@@ -279,8 +284,8 @@ namespace DAL
 
         public Trainee GetTrainee(string traineeID)
         {
-            //traineeID = $"{Convert.ToInt32(traineeID):000000000}";
-            return traineesList.FirstOrDefault(tl => tl.ID == traineeID.GetHashedId());
+            traineeID.ToFullID();
+            return traineesList.FirstOrDefault(tl => tl.ID == traineeID.GetHashedID());
         }
 
         public IEnumerable<Trainee> GetAllTrainees(Func<Trainee, bool> predicate = null)
@@ -300,8 +305,8 @@ namespace DAL
         {
             // צריך לבדוק שבוחן ונבחן שרשומים קיימים ברשימות ושהמבחן לא קיים ברשימה
 
-            //testerID = $"{Convert.ToInt32(testerID):000000000}";
-            //traineeID = $"{Convert.ToInt32(traineeID):000000000}";
+            testerID.ToFullID();
+            traineeID.ToFullID();
 
             Tester t2 = GetTester(testerID);
             if (t2 == null)
@@ -316,10 +321,8 @@ namespace DAL
           
 
             test.TestID = Configuration.RunningTestID++;
-            //test.TesterID = testerID.CalculateMD5Hash();
-            //test.TraineeID = traineeID.CalculateMD5Hash();
-            test.TesterID = testerID;
-            test.TraineeID = traineeID;
+            test.TesterID = testerID.GetHashedID();
+            test.TraineeID = traineeID.GetHashedID();
             t2.AvailableSchedule[test.TestDate.NumberDayOfWeek(), test.TestDate.Hour] = false;
             t2.WeeklyTests++;
             t3.DrivingInstructorFirstName = t2.FirstName;
