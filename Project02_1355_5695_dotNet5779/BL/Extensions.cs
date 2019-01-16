@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace BL
 {
@@ -14,6 +14,16 @@ namespace BL
         {
             return (Math.PI / 180) * val;
         }
-    }
 
+        public static string ToFullID(this string ID)
+        {
+            return ID.PadLeft(9, '0');
+        }
+
+        public static int NumberDayOfWeek(this DateTime d)
+        {
+            return (int)d.DayOfWeek;
+        }
+    }
+  
 }
