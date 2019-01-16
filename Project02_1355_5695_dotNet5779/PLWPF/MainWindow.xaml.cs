@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +22,12 @@ namespace PLWPF
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            Identify identify = new Identify();
+            identify.Show();
         }
     }
 }
