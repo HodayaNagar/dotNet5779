@@ -1,9 +1,11 @@
-﻿using BE;
+using BE;
 using DAL;
 using GoogleMaps.LocationServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -284,6 +286,7 @@ namespace BL
         #endregion
 
 
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -333,8 +336,7 @@ namespace BL
         public bool IsValidId(string id)
         {
             if (Convert.ToInt32(id) < 1 || Convert.ToInt32(id) > 999999999) return false;
-            string fullId = $"{Convert.ToInt32(id):000000000}";
-            //string fullId = id;
+            string fullId = id.ToFullID();
             int mone = 0;
             int incNum;
             for (int i = 0; i < 9; i++)
@@ -351,6 +353,17 @@ namespace BL
             else
                 return false;
 
+        }
+
+
+        public static void SendMail(string message, string gmail)
+        {
+            var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(Configuration.ProgramGMail, Configuration.ProgramGMailPassword),
+                EnableSsl = true
+            };
+            client.Send(Configuration.ProgramGMail, gmail, "test", message);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -503,16 +516,6 @@ namespace BL
 
         }
 
-        //public static void PrintProperty<T>(T t)
-        //{
-
-        //    foreach (PropertyInfo item in t.GetType().GetProperties())
-        //    {
-        //        Console.WriteLine
-        //            ("name: {0,-15} value: {1,-15}"
-        //            , item.Name, item.GetValue(t, null));
-        //    }
-        //}
-
+    
     }
 }
